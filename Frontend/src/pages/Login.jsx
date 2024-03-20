@@ -20,8 +20,8 @@ const Login = () => {
         await axios.post('http://localhost:5000/api/user/signIn', data)
             .then((response) => {
                 console.log("login response ", response)
-                // localStorage.setItem('user', JSON.stringify(response.data.userName));
-                // localStorage.setItem('token', JSON.stringify(response.data.token));
+                localStorage.setItem('user', JSON.stringify(response.data.userName));
+                localStorage.setItem('token', JSON.stringify(response.data.token));
                 if (response.data) { // adding the login info to the store
                     dispatch(addUser(response.data));
                     setLoginStatus('');
