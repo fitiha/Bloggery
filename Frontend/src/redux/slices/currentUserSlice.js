@@ -11,13 +11,18 @@ export const currentUserSlice = createSlice({
         addUser: (state, action) => {  //reducer function 1
             state.value = { ...state.value, ...action.payload };
         },
-        removeUser: (state) => { //reducer function 2
+        clearState: (state) => { //reducer function 2 - logging out
             state.value = {};
-        }
+            localStorage.clear();
+            window.location.reload();
+        },
+        sessionExpired: (state) => {
+            state.sessionExpired = true;
+        },
     },
 })
 
 // Action creators are generated for each case reducer function
-export const { addUser, removeUser } = currentUserSlice.actions
+export const { addUser, clearState } = currentUserSlice.actions
 
 export default currentUserSlice.reducer

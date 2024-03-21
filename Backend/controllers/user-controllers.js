@@ -2,6 +2,7 @@ import userModel from '../models/userModel.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import blogModel from '../models/blogModel.js';
+import mongoose from 'mongoose';
 
 export const createUser = async (req, res, next) => {
     const { name, email, password } = req.body;
@@ -10,7 +11,7 @@ export const createUser = async (req, res, next) => {
         // Check if user already exists
         const existingUser = await userModel.findOne({ email });
         if (existingUser) {
-            return res.status(400).send("User already exists with this email.");
+            return res.status(400).send("User with this email already exists.");
         }
 
         // Hash the password
@@ -28,7 +29,7 @@ export const createUser = async (req, res, next) => {
         // Save the new user
         const result = await newUser.save();
         const token = jwt.sign({ userId: result._id, email: result.email }, process.env.JWT_SECRET, { expiresIn: '300s' }); //the first object can be any thing. token expires in 5min
-        res.status(201).json({ userId: result._id, userName: result.name, token: token, userEmail: result.email });
+        res.status(200).json({ userId: result._id, userName: result.name, token: token, userEmail: result.email });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -55,30 +56,35 @@ export const signIn = (req, res, next) => {
             } else {
                 let doPasswordsMatch = bcrypt.compareSync(password, user.password);
                 if (!doPasswordsMatch)
-                    res.status(422).json("Passwords do not match");
+                    res.status(422).json({ error: "Passwords do not match" });
                 else {
                     // res.status(200).json("welcome " + user.name);
-                    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '300s' }); //the first object can be any thing. token expires in 5min
+                    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '30s' }); //the first object can be any thing. token expires in 5min
                     res.status(200).json({ token: token, userId: user._id, userName: user.name, userEmail: user.email });// we then store the token in the frontend state and use it to access the rest of the pages that require auth as a middleware 
                 }
             }
         })
         .catch((err) => {
-            res.send(err);
+            console.log(err?.message);
+            res.status(500).json({ error: err.message });
         })
 }
 
 export const getUserById = async (req, res, next) => {
     const userId = req.params.id;
-    await userModel.findById(userId)
-        .then((user) => {
-            if (!user) {
-                return res.status(404).json({ message: "No user found" });
-            } else {
-                res.status(200).json({ user });
-            }
-        })
-        .catch(err => { console.log(err) })
+    if (userId && mongoose.Types.ObjectId.isValid(userId)) {
+        await userModel.findById(userId)
+            .then((user) => {
+                if (!user) {
+                    return res.status(404).json({ message: "No user found" });
+                } else {
+                    res.status(200).json({ user });
+                }
+            })
+            .catch(err => { console.log(err) })
+    }
+    else
+        console.log("invalid id");
 }
 
 export const updateUser = async (req, res, next) => {
@@ -113,24 +119,20 @@ export const deleteUser = async (req, res, next) => {
 
 export const addBlog = async (req, res, next) => {
     const { title, content, userId, author } = req.body;
-
+    console.log(req.body.userId)
     const blog = new blogModel({
         title,
         content,
-        user: userId,
-        author: author
+        userId: req.body.userId,
+        author
     });
-
     try {
-        await blogModel.create(blog)
-            .then((response) => {
-                console.log("add blogger: ", response)
-            })
-            .catch((err) => console.log(err))
-
-        userModel.findByIdAndUpdate(user._id, { $push: { blogs: newBlog._id } }, { new: true }).exec();
-        res.status(201).json({ blog });
+        console.log("blog to be: ", blog)
+        const response = await blogModel.create(blog);
+        await userModel.findByIdAndUpdate(userId, { $push: { blogs: blog._id } }, { new: true }).exec();
+        return res.status(201).json({ blog: response });
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        console.log(error);
+        return res.status(500).json({ error: error.message });
     }
 }

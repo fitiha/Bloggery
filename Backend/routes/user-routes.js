@@ -8,7 +8,7 @@ userRouter.post('/signup', createUser);
 userRouter.post('/signIn', signIn);
 
 // userRouter.use(auth);
-userRouter.post('/create', addBlog);
+userRouter.post('/create', auth, addBlog);
 userRouter.get('/', getAllUsers);
 userRouter.get('/:id', getUserById);
 userRouter.put('/update/:id', updateUser);

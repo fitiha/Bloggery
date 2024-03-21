@@ -1,27 +1,59 @@
 import axios from 'axios';
-import { useState } from "react";
-import { useDispatch } from 'react-redux';
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from "react-router-dom";
 import { addUser } from '../redux/slices/currentUserSlice';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import isObjectEmpty from '../functions/isObjectEmpty.';
 
 const Register = () => {
     const [data, setData] = useState({});
+    const [errorMessage, setErrorMessage] = useState('');
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const currentUser = useSelector((state) => state.currentUser.value)
 
     const handleChange = (e) => {
         setData({ ...data, [e.target.name]: e.target.value }); //as a key-value pair
     };
 
-    const handleSubmit = async () => {
+    // if the user refreshes the page fetch the data from the local storage and add it to the store
+    useEffect(() => {
+        const user = JSON.parse(localStorage.getItem('user'));
+        const token = JSON.parse(localStorage.getItem('token'));
+        const userId = JSON.parse(localStorage.getItem('userId'));
+        const email = JSON.parse(localStorage.getItem('email'));
+
+        if (user && token) {
+            dispatch(addUser({ userName: user, token: token, userId: userId, userEmail: email }));
+        }
+        if (!isObjectEmpty(currentUser)) {
+            navigate('/create');
+        }
+    }, []);
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
         await axios.post('http://localhost:5000/api/user/signup', data)
             .then((response) => {
-                console.log("successful registration of ", response.data);
-                dispatch(addUser(response.data));
-                navigate('/');
+                if (response.status === 200) {
+                    localStorage.setItem('user', JSON.stringify(response.data.userName));
+                    localStorage.setItem('userId', JSON.stringify(response.data.userId));
+                    localStorage.setItem('email', JSON.stringify(response.data.userEmail));
+                    localStorage.setItem('token', JSON.stringify(response.data.token));
+                    dispatch(addUser(response.data));
+                    navigate('/');
+                    setErrorMessage('');
+                } else if (response.status === 400) {
+                    setErrorMessage(response.data.message);
+                } else {
+                    setErrorMessage('Something went wrong');
+                }
             })
-            .catch(err => console.log(err));
+            .catch(err => {
+                console.log(err)
+                setErrorMessage(err.response.data);
+            });
     }
 
     return (<>
@@ -31,7 +63,8 @@ const Register = () => {
         <div className="flex justify-center m-16">
             <div className="flex flex-col bg-gradient-to-r from-blue-950 via-orange-950 to-pink-950 justify-evenly text-orange-300 rounded-3xl h-3/4 w-82 p-8">
                 <h1 className="text-4xl mb-8">Sign Up</h1>
-                <form action="submit">
+                {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
+                <form onSubmit={handleSubmit}>
                     <span>Name</span> <br />
                     <input
                         className="text-black px-2 mb-2 rounded-lg"
@@ -65,14 +98,11 @@ const Register = () => {
                         </Link>
                         <span>  instead</span>
                     </span> <br />
-                    <Link to='/'>
-                        <button
-                            onClick={handleSubmit}
-                            className="bg-emerald-700 text-gray-100 h-8 w-24 mt-4 rounded-full hover:bg-emerald-800"
-                        > Submit</button>
-                    </Link>
 
-
+                    <button
+                        type='submit'
+                        className="bg-emerald-700 text-gray-100 h-8 w-24 mt-4 rounded-full hover:bg-emerald-800"
+                    > Submit</button>
                 </form>
             </div>
         </div>

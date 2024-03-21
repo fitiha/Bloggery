@@ -1,19 +1,47 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { addUser } from "../redux/slices/currentUserSlice";
+import { toast } from 'react-toastify';
 
 const Home = () => {
     const [data, setData] = useState([]);
+    const dispatch = useDispatch();
 
+    const sessionExpired = useSelector(state => state.sessionExpired);
+    const navigate = useNavigate();
 
     useEffect(() => {
         axios.get("http://localhost:5000/api/blog")
             .then((response) => {
-                // console.log(response.data.blogs);
                 setData(response.data.blogs);
             })
-            .catch((err) => console.log(err.message));
+            .catch((err) => {
+                console.log(err)
+                toast.error("Network Error. Try refreshing the page.")
+            });
     }, [])
+
+    // if the user refreshes the page fetch the data from the local storage and add it to the store
+    useEffect(() => {
+        const user = JSON.parse(localStorage.getItem('user'));
+        const token = JSON.parse(localStorage.getItem('token'));
+        const userId = JSON.parse(localStorage.getItem('userId'));
+        const email = JSON.parse(localStorage.getItem('email'));
+
+        if (user && token) {
+            dispatch(addUser({ userName: user, token: token, userId: userId, userEmail: email }));
+        }
+    }, []);
+
+    useEffect(() => {
+        if (sessionExpired) {
+            window.location.reload();
+            navigate('/login');
+            toast.error("Session expired. Please log in again.");
+        }
+    }, [sessionExpired, navigate]);
 
     return (<>
         <div >
@@ -21,7 +49,7 @@ const Home = () => {
                 <h1 className="font-light text-6xl ml-12">Latest <u>Blogs</u> </h1>
             </div>
 
-            {data.map((blog) => {
+            {data.slice().reverse().map((blog) => {
                 return (<Link to={`/detail/${blog._id}`} key={blog._id}>
                     <div className="font-light text-slate-200 h-44 m-8 p-8 rounded-t-3xl bg-gradient-to-r from-blue-950 via-orange-950 to-pink-950">
                         <h2 className="text-2xl font-semibold">{blog.title}</h2>

@@ -1,8 +1,8 @@
 import jwt from 'jsonwebtoken';
 
 export const auth = (req, res, next) => {
-    console.log(req);
     const authHeader = req.headers["authorization"];
+    // console.log("auth header: ", authHeader);
     if (!authHeader)
         return res.json({ msg: "Authorization denied. No authorization header provided." });
     var token;
@@ -18,9 +18,9 @@ export const auth = (req, res, next) => {
 
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET); //returns the information you used to create the token (in this case the ID)
-        req.user = decoded; // this is used for further authentication in the next step
+        req.user = decoded; // this is used for further authentication in the next step, by saying if(req.user)
         next();
     } catch (err) {
-        res.status(400).json({ message: 'Invalid token.' });
+        res.status(400).json({ message: err.message });
     }
 };

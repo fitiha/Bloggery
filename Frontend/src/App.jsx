@@ -10,11 +10,14 @@ import EditBlog from "./pages/EditBlog"
 import Admin from './pages/admin/Admin'
 import ManageUsers from "./pages/admin/ManageUsers"
 import ManageBlogs from "./pages/admin/ManageBlogs"
+import { ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 
 const App = () => {
   return (<>
     <NavBar />
+    <ToastContainer />
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />

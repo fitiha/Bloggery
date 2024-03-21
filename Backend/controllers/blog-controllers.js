@@ -67,7 +67,7 @@ export const deleteBlog = async (req, res, next) => {
 
 export const getBlogByUserId = async (req, res, next) => {
     try {
-        const blog = await blogModel.find({ user: req.params.id });
+        const blog = await blogModel.find({ userId: req.params.id });
         if (!blog)
             return res.status(404).json({ message: "No blog found" });
         else
