@@ -11,7 +11,6 @@ Bloggery is a full-stack web application designed to cater to bloggers and reade
 - **User Registration/Login**: Secure signup and login process for users.
 - **Blog Creation**: Users can write, edit, and publish their blogs.
 - **Public Profiles**: Showcase your bio and blogs on a public profile.
-- **Commenting System**: Engage with the community through comments.
 - **Search & Filter**: Easily find blogs by title, category, or tags.
 - **Responsive Design**: Enjoy blogging on any device, anywhere.
 
@@ -23,7 +22,7 @@ Bloggery leverages a comprehensive set of technologies to ensure a top-notch exp
 - **Backend**: Node.js with Express.js, providing RESTful API services.
 - **Database**: MongoDB for storing user and blog data.
 - **Authentication**: JWT for secure authentication and authorization.
-- **Deployment**: Deployed on [Your Hosting Service] with CI/CD pipelines for seamless updates.
+- **Deployment**: 
 
 ## Getting Started
 
@@ -32,3 +31,29 @@ To get a local copy up and running, follow these simple steps:
 1. **Clone the repository**
    ```sh
    git clone https://github.com/yourusername/Bloggery.git
+
+2. **Install NPM packages**
+   ```sh
+   npm install
+   
+3. **Configure Environment Variables**
+   ```sh
+   .env
+
+4. **Run the Application**
+   ```sh
+   npm start
+
+
+## Contributing
+**We welcome contributions from everyone. Whether it's feature suggestions, bug reports, or code contributions, feel free to make a pull request or open an issue.**
+
+## License
+Distributed under the MIT License. See LICENSE for more information.
+
+## Contact me on telegram
+**Natty** - @edilFish
+
+Project Link: 
+```sh
+https://github.com/fitiha/The-Blogger-Field
