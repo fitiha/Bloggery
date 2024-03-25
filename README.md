@@ -1,4 +1,4 @@
-# Bloggery
+# Bloggery.
 
 Welcome to **Bloggery**, the ultimate platform where users can unleash their creativity, share their thoughts, and make their blogs accessible to a public audience. Bloggery is not just a blogging site; it's a community where writers meet readers, ideas spark discussions, and stories come to life.
 
