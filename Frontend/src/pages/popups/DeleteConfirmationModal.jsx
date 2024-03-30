@@ -10,14 +10,14 @@ import { useDispatch } from 'react-redux';
 import { addUser } from '../../redux/slices/currentUserSlice';
 
 // eslint-disable-next-line react/prop-types
-const ResponsiveDialog = ({ isOpen, onClose, x, onConfirm }) => {
+const ResponsiveDialog = ({ isOpen, onClose, x, onConfirm, message }) => {
     const dispatch = useDispatch();
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
     const handleConfirmClick = () => {
-        onConfirm(x); // Pass the x prop (blog ID) to the onConfirm function
-        onClose(); // Close the dialog after confirmation
+        onConfirm(x);
+        onClose();
     };
 
     // if the user refreshes the page fetch the data from the local storage and add it to the store
@@ -40,13 +40,8 @@ const ResponsiveDialog = ({ isOpen, onClose, x, onConfirm }) => {
             aria-labelledby="responsive-dialog-title"
         >
             <DialogTitle id="responsive-dialog-title">
-                {"Do you really want to delete this blog?"}
+                {message}
             </DialogTitle>
-            {/* <DialogContent>
-                <DialogContentText>
-                    Do you really want to delete this blog?
-                </DialogContentText>
-            </DialogContent> */}
             <DialogActions>
                 <Button autoFocus onClick={onClose}>
                     No

@@ -14,10 +14,7 @@ export const currentUserSlice = createSlice({
         clearState: (state) => { //reducer function 2 - logging out
             state.value = {};
             localStorage.clear();
-            window.location.reload();
-        },
-        sessionExpired: (state) => {
-            state.sessionExpired = true;
+            // window.location.reload();
         },
     },
 })

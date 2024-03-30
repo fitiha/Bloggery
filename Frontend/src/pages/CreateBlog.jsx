@@ -1,18 +1,23 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import isObjectEmpty from '../functions/isObjectEmpty.';
 import { addUser } from "../redux/slices/currentUserSlice";
 import { toast } from "react-toastify";
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { InputLabel, MenuItem, Select } from "@mui/material";
 
 const CreateBlog = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [data, setData] = useState({});
-    const currentUser = useSelector((state) => state.currentUser.value)
+    const currentUser = useSelector((state) => state.currentUser.value);
+    const categories = ['Technology', 'Health', 'Science', 'Business', 'Entertainment', 'Sports', 'Education', 'Lifestyle', 'Travel', 'Fashion', 'Food', 'Music', 'Politics', 'Art', 'Environment', 'Others'];
 
-    // if the user refreshes the page fetch the data from the local storage and add it to the store
+    // rehydrate the store if page is refreshed or if the token is expired navigate to login page
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem('user'));
         const token = JSON.parse(localStorage.getItem('token'));
@@ -28,60 +33,97 @@ const CreateBlog = () => {
         }
     }, []);
 
-
     const handleChange = (e) => {
-        setData({ ...data, [e.target.name]: e.target.value, userId: currentUser.userId, author: currentUser.userName }); //key-value pair
+        setData({ ...data, [e.target.name]: e.target.value, userId: currentUser.userId, author: currentUser.userName });
     };
-
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        await axios.post('http://localhost:5000/api/user/create', data, { headers: { 'authorization': `Bearer ${currentUser.token}` } })
-            .then((response) => {
-                console.log(response.data?.message)
-                navigate('/');
-                toast.success("Blog created successfully")
-            })
-            .catch((err) => {
-                console.log(err)
-                toast.error("Token expired") //err.response.data.message 
-                navigate('/');
+        try {
+            await axios.post('http://localhost:5000/api/user/create', data, {
+                headers: { authorization: `Bearer ${currentUser.token}` }
             });
-    }
+            navigate('/');
+            toast.success("Blog created successfully");
+        } catch (err) {
+            toast.error(err.response?.data?.message || "An error occurred");
+            if (err.response?.data?.error === "Token expired") {
+                navigate('/login');
+            }
+        }
+    };
 
-    return (<>
-        <div className="pl-80">
-            <h1 className="text-4xl ml-16">Create Your Own Blog</h1>
-            <form onSubmit={handleSubmit} className="bg-gradient-to-r rounded-lg from-blue-950 via-orange-950 to-pink-950 flex flex-col h-full w-2/3 p-16">
-                <span className="text-gray-200">Blog Title : </span>
-                <input
-                    name="title"
-                    type="text"
-                    onChange={handleChange}
-                    autoComplete="off"
-                />
-
-                <span className="text-gray-200">Blog Body : </span>
-                <input
-                    name="content"
-                    type="text"
-                    onChange={handleChange}
-                />
-
-                <button
-                    type="submit"
-                    className="bg-emerald-700 text-gray-100 h-8 w-24 rounded-full mt-4"
-                >Submit
-                </button>
-
-                <button
-                    className="bg-emerald-700 text-gray-100 h-8 w-24 rounded-full mt-4 pl-4 pt-1"
-                    onClick={() => navigate('/')}
-                >Cancel</button>
-            </form>
+    return (<div className="bg-gray-100 px-24">
+        <div className="flex justify-start items-center ml-16 pt-8">
+            <Link to={'/'}>
+                <ArrowBackIcon className="text-gray-600 mt-4 hover:text-blue-500" style={{ fontSize: '2rem' }} />
+            </Link>
         </div>
-    </>
-    )
+        <div className="flex justify-center items-start pt-8 min-h-screen">
+            <div className="w-full max-w-2xl p-8 rounded-xl bg-white shadow-lg">
+                <h1 className="text-4xl font-bold mb-4">Create Your Own Blog</h1>
+                <form onSubmit={handleSubmit} className="space-y-6">
+                    <TextField
+                        fullWidth
+                        label="Blog Title"
+                        variant="outlined"
+                        name="title"
+                        onChange={handleChange}
+                        required
+                    />
+                    <TextField
+                        fullWidth
+                        label="Blog Content"
+                        variant="outlined"
+                        name="content"
+                        multiline
+                        rows={4}
+                        onChange={handleChange}
+                        required
+                    />
+                    <div >
+                        <InputLabel id="demo-simple-select-label">Blog Category</InputLabel>
+                        <Select
+                            className="w-full"
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            name="category"
+                            value={data.category || ''}
+                            label="Blog Category"
+                            onChange={handleChange}
+                            required
+                        >
+                            {categories.map((category, index) => {
+                                return <MenuItem key={index} value={category}>{category}</MenuItem>
+                            })
+                            }
+                        </Select>
+
+                    </div>
+                    <div className="flex justify-between">
+                        <Button
+                            variant="outlined"
+                            type="submit"
+                            sx={{
+                                backgroundColor: 'gray',
+                                color: 'white',
+                                '&:hover': {
+                                    borderColor: 'white',
+                                    backgroundColor: 'black',
+                                },
+                            }}
+                        >
+                            Submit
+                        </Button>
+                        <Button variant="outlined" onClick={() => navigate('/')}>
+                            Cancel
+                        </Button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    );
 }
 
 export default CreateBlog;

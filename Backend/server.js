@@ -16,6 +16,7 @@ dotenv.config();
 //routes
 app.use('/api/user', userRouter);
 app.use('/api/blog', blogRouter);
+app.use('/uploads', express.static('uploads'));
 
 
 //connections

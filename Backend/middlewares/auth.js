@@ -19,6 +19,12 @@ export const auth = (req, res, next) => {
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET); //returns the information you used to create the token (in this case the ID)
         req.user = decoded; // this is used for further authentication in the next step, by saying if(req.user)
+        // console.log("decoded token: ", decoded);
+        // decoded token:  {
+        //     userId: '65fc6a2ce9a773ce37508ac1',
+        //     iat: 1711041781,
+        //     exp: 1711041811
+        //   }
         next();
     } catch (err) {
         res.status(400).json({ message: err.message });

@@ -1,21 +1,5 @@
 import blogModel from "../models/blogModel.js";
-
-// export const createBlog = async (req, res, next) => {
-//     const { title, content, user } = req.body;
-
-//     const blog = new blogModel({
-//         title,
-//         content,
-//         user
-//     });
-
-//     try {
-//         await blog.save();
-//         res.status(201).json(blog);
-//     } catch (error) {
-//         res.send(error);
-//     }
-// }
+import likeModel from "../models/likeModel.js";
 
 export const getAllBlogs = async (req, res, next) => {
     try {
@@ -45,7 +29,7 @@ export const updateBlog = async (req, res, next) => {
     try {
         const blog = await blogModel.findByIdAndUpdate(req.params.id, req.body, { new: true });
         if (!blog)
-            return res.status(404).json({ message: "No blog found" });
+            return res.status(404).json({ message: "Can't find a blog." });
         else
             res.status(200).json({ blog });
     } catch (error) {
@@ -65,6 +49,16 @@ export const deleteBlog = async (req, res, next) => {
     }
 }
 
+export const clearBlogs = async (req, res, next) => {
+    try {
+        await blogModel.deleteMany();
+        await likeModel.deleteMany();
+        res.status(200).json({ message: "All blogs deleted successfully" });
+    } catch (error) {
+        res.send(error);
+    }
+}
+
 export const getBlogByUserId = async (req, res, next) => {
     try {
         const blog = await blogModel.find({ userId: req.params.id });
@@ -76,3 +70,30 @@ export const getBlogByUserId = async (req, res, next) => {
         res.send(error);
     }
 }
+
+
+// Like Controller
+export const getAllLikes = async (req, res, next) => {
+    try {
+        const likes = await likeModel.find();
+        if (!likes)
+            return res.status(404).json({ message: "No likes found" });
+        else
+            res.status(200).json({ likes });
+    } catch (error) {
+        res.send(error);
+    }
+}
+
+export const getBlogLikes = async (req, res, next) => {
+    try {
+        const likes = await likeModel.find({ blogId: req.params.id });
+        if (!likes)
+            return res.status(404).json({ message: "No likes found" });
+        else
+            res.status(200).json({ likes });
+    } catch (error) {
+        res.send(error);
+    }
+}
+
