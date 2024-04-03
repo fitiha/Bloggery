@@ -4,8 +4,8 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { toast } from "react-toastify";
 import { addUser } from "../redux/slices/currentUserSlice";
-import { useNavigate } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const EditProfile = () => {
     const [formData, setFormData] = useState({
@@ -54,11 +54,11 @@ const EditProfile = () => {
             },)
 
             toast.success("Successfully updated the user details.");
-            localStorage.setItem('user', JSON.stringify(response.data.updated.name));
-            localStorage.setItem('userId', JSON.stringify(response.data.updated._id));
-            localStorage.setItem('email', JSON.stringify(response.data.updated.email));
-            localStorage.setItem('token', JSON.stringify(currentUser.token));
-            localStorage.setItem('avatar', JSON.stringify(response.data.updated.avatar));
+            // localStorage.setItem('user', JSON.stringify(response.data.updated.name));
+            // localStorage.setItem('userId', JSON.stringify(response.data.updated._id));
+            // localStorage.setItem('email', JSON.stringify(response.data.updated.email));
+            // localStorage.setItem('token', JSON.stringify(currentUser.token));
+            // localStorage.setItem('avatar', JSON.stringify(response.data.updated.avatar));
             dispatch(addUser(response.data.updated));
             navigate("/");
         }
@@ -69,8 +69,13 @@ const EditProfile = () => {
 
     return (
         <div className="pb-8">
-            <div className="flex justify-center mt-8">
-                <div className="flex-col  w-2/5 h-auto p-8 rounded-t-3xl bg-gradient-to-r from-gray-700 via-gray-600 to-gray-500">
+            <div className="flex justify-start items-center ml-4 lg:ml-16 mt-4">
+                <Link to={'/profile'}>
+                    <ArrowBackIcon className="text-gray-600 hover:text-blue-500" style={{ fontSize: '2rem' }} />
+                </Link>
+            </div>
+            <div className="flex justify-center mt-4">
+                <div className="flex-col mx-8 w-full lg:w-3/5 sm:w-4/5 md:w-3/5 xs:w-4/5 w-2/5 h-auto p-8 rounded-t-3xl bg-gray-950">
                     <img
                         src={`http://localhost:5000/uploads/${currentUser.avatar}`}
                         alt={currentUser.name}
@@ -83,41 +88,19 @@ const EditProfile = () => {
                     </div>
                 </div>
             </div>
-            <div className="flex justify-center mt-1 mb-1 ">
-                <div className="flex-col text-gray-100 w-2/5 h-auto p-8 rounded-b-3xl bg-gradient-to-r from-gray-600 via-gray-500 to-gray-500">
+            <div className="flex justify-center mt-0.5 mb-1 ">
+                <div className="flex-col w-full mx-8 lg:w-3/5 sm:w-4/5 md:w-3/5 xs:w-3/5 text-gray-100 h-auto p-8 rounded-b-3xl bg-gray-950">
                     <h1 className="text-2xl font-bold ">Edit Profile</h1>
                     <hr className="border-gray-300 mt-2" />
 
                     <form onSubmit={handleSubmit} className="flex flex-col gap-4 text-gray-100 mt-4" encType="multipart/form-data">
-
-                        <TextField
-                            className="text-gray-100"
-                            type="file"
-                            fullWidth
-                            variant="outlined"
-                            name="avatar"
-                            label="Avatar"
-                            onChange={handleChange}
-                            required
-                            InputLabelProps={{
-                                shrink: true,
-                                sx: { color: 'white' }
-                            }}
-                            InputProps={{
-                                sx: { color: 'white', '&::before': { borderBottomColor: 'white' }, '&::after': { borderBottomColor: 'gray' } }
-                            }}
-                            sx={{
-                                '& .MuiOutlinedInput-root': {
-                                    '& fieldset': { borderColor: 'gray' }, // Change border color
-                                    '&:hover fieldset': { borderColor: 'orange' }, // Change border color on hover
-                                    '&.Mui-focused fieldset': { borderColor: 'gray' }, // Change border color when focused
-                                },
-                            }}
-                        />
+                        <label className="block">
+                            <span className="sr-only">Choose profile photo</span>
+                            <input type="file" name="avatar" onChange={handleChange} required className="w-full text-sm text-slate-100 file:mr-3 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-gray-800 file:text-violet-200 hover:file:bg-orange-800" />
+                        </label>
                         <TextField
                             type="text"
                             fullWidth
-                            // variant="outlined"
                             name="name"
                             label="Name"
                             onChange={handleChange}
@@ -185,24 +168,8 @@ const EditProfile = () => {
                                 },
                             }}
                         />
-
-                        {/* <div className="flex-col mt-4">
-                            <label className="text-gray-300">Confirm Password</label>
-                            <input
-                                type="password"
-                                name="confirmPassword"
-                                className="w-full p-2 mt-1 rounded-lg"
-                                placeholder="Confirm new password"
-                            />
-                        </div> */}
                         <div className="flex justify-center mt-8">
-                            <Button
-                                type="submit"
-                                variant="contained"
-                                fullWidth
-                            >
-                                Update
-                            </Button>
+                            <button type="submit" className="bg-gray-800 w-full text-white px-6 py-3 rounded-lg font-medium text-lg hover:bg-orange-800 transition-colors">Update</button>
                         </div>
                     </form>
                 </div>

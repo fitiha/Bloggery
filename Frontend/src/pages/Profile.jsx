@@ -9,7 +9,7 @@ import ResponsiveDialog from "./popups/DeleteConfirmationModal";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { clearState } from "../redux/slices/currentUserSlice";
-import { addUser } from "../redux/slices/currentUserSlice";
+// import { addUser } from "../redux/slices/currentUserSlice";
 import ArticleIcon from '@mui/icons-material/Article'
 import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
 import { toast } from "react-toastify";
@@ -28,17 +28,17 @@ const Profile = () => {
     const currentUser = useSelector((state) => state.currentUser.value);
 
     // if the user refreshes the page fetch the data from the local storage and add it to the store
-    useEffect(() => {
-        const user = JSON.parse(localStorage.getItem('user'));
-        const token = JSON.parse(localStorage.getItem('token'));
-        const userId = JSON.parse(localStorage.getItem('userId'));
-        const email = JSON.parse(localStorage.getItem('email'));
-        const avatar = JSON.parse(localStorage.getItem('avatar'));
+    // useEffect(() => {
+    //     const user = JSON.parse(localStorage.getItem('user'));
+    //     const token = JSON.parse(localStorage.getItem('token'));
+    //     const userId = JSON.parse(localStorage.getItem('userId'));
+    //     const email = JSON.parse(localStorage.getItem('email'));
+    //     const avatar = JSON.parse(localStorage.getItem('avatar'));
 
-        if (user && token) {
-            dispatch(addUser({ userName: user, token: token, userId: userId, userEmail: email, avatar: avatar }));
-        }
-    }, []);
+    //     if (user && token) {
+    //         dispatch(addUser({ userName: user, token: token, userId: userId, userEmail: email, avatar: avatar }));
+    //     }
+    // }, []);
 
     useEffect(() => {
         axios.get(`http://localhost:5000/api/user/${currentUser.userId}`)
@@ -79,11 +79,12 @@ const Profile = () => {
         setBlogIdToDelete(null);
     };
 
+    console.log("current user: ", currentUser.avatar)
 
 
     return (<>
-        <div className="px-24 pt-4 bg-gray-100 min-h-screen">
-            <div className="flex justify-start items-center ml-16 mt-8">
+        <div className="lg:px-24 pt-4 bg-gray-100 min-h-screen">
+            <div className="flex justify-start items-center ml-16 mt-4">
                 <Link to={'/'}>
                     <ArrowBackIcon className="text-gray-600 hover:text-blue-500" style={{ fontSize: '2rem' }} />
                 </Link>
@@ -104,8 +105,8 @@ const Profile = () => {
             />
 
             <div>
-                <div className="flex justify-center mt-8 mb-1 ">
-                    <div className="flex-col  w-2/5 h-auto border-b-4 border-indigo-950 p-8 rounded-t-3xl bg-gradient-to-r from-gray-700 via-gray-700 to-gray-600">
+                <div className="flex justify-center mt-4 mb-1 ">
+                    <div className="flex-col mx-8 w-full lg:w-3/5 sm:w-4/5 md:w-3/5 xs:w-4/5 h-auto p-8 rounded-t-3xl bg-gray-950">
                         <img
                             src={`http://localhost:5000/uploads/${currentUser.avatar}`}
                             alt={data.name}
@@ -114,7 +115,12 @@ const Profile = () => {
 
                         <div className="flex-col pl-12 text-gray-300">
                             <h1 className="text-3xl mt-4 font-bold leading-relaxed">{data.name}</h1>
-                            <h1 className="text-xl font-light mb-8">{data.email}</h1>
+                            <h1 className="text-xl font-light mb-2">{data.email}</h1>
+                            <div className="flex lg:gap-8 sm:gap-4 mb-4">
+                                <h1 className="text-xl font-light"> <span className="font-bold">{blogs.length}</span> Posts</h1>
+                                <h1 className="text-xl font-light">Followers</h1>
+                                <h1 className="text-xl font-light">Following</h1>
+                            </div>
                             <div className="flex gap-4">
                                 <Link to="/edit-profile">
                                     <Button
@@ -122,8 +128,8 @@ const Profile = () => {
                                         sx={{
                                             color: 'white',
                                             '&:hover': {
-                                                borderColor: 'green',
-                                                backgroundColor: 'green',
+                                                borderColor: 'blue',
+                                                backgroundColor: 'gray',
                                             },
                                         }}
                                     >Edit Profile</Button>
@@ -135,7 +141,7 @@ const Profile = () => {
                                         backgroundColor: 'brown',
                                         color: 'white',
                                         '&:hover': {
-                                            borderColor: 'red',
+                                            borderColor: 'darkred',
                                             backgroundColor: 'darkred',
                                         },
                                     }} onClick={() => setLogoutOpenState(true)}>
@@ -144,8 +150,8 @@ const Profile = () => {
                         </div>
                     </div>
                 </div>
-                <div className="flex justify-center mt-2">
-                    <div className="flex-col w-2/5 h-auto border-b-4 border-indigo-950 p-8 rounded-b-3xl bg-gradient-to-r from-gray-700 via-gray-700 to-gray-600">
+                <div className="flex justify-center mt-px">
+                    <div className="flex-col mx-8 lg:w-3/5 sm:w-4/5 md:w-3/5 xs:w-3/5 h-auto border-b-4 border-indigo-950 p-8 rounded-b-3xl bg-gray-950">
                         <div>
                             <h1 className="font-light text-slate-100 text-xl mb-4 underline underline-offset-4"> <ArticleIcon />Your Blogs</h1>
 
@@ -154,7 +160,7 @@ const Profile = () => {
                                     (blogs.length == 0 ? <h1 className="font-light text-gray-400">No blogs here yet.</h1> :
                                         blogs.map((blog, index) => {
                                             return (<>
-                                                <List key={index} sx={{ width: '100%' }} className="bg-gray-400">
+                                                <List key={index} sx={{ width: '100%' }} className="odd:bg-slate-400 even:bg-gray-400">
                                                     <ListItem alignItems="flex-start">
                                                         <ListItemAvatar>
                                                             <Avatar alt={blog.title} src="#" />
@@ -172,7 +178,7 @@ const Profile = () => {
                                                                         >
                                                                             {data.name}
                                                                         </Typography>
-                                                                        <p className="text-nowrap text-ellipsis overflow-hidden">{blog.content}</p>
+                                                                        <p className="line-clamp-2">{blog.content}</p>
                                                                     </React.Fragment>
                                                                 </div>
                                                             }
@@ -188,9 +194,7 @@ const Profile = () => {
                                                                 handleDeleteConfirmation(blog._id)
                                                             }} />
                                                         </div>
-
                                                     </ListItem>
-
                                                     <Divider variant="inset" component="li" className="h-0.5 bg-red-800" />
                                                 </List>
                                             </>
@@ -204,7 +208,7 @@ const Profile = () => {
                     </div>
                 </div>
             </div>
-        </div >
+        </div>
     </>
     )
 }

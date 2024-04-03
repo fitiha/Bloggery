@@ -1,32 +1,39 @@
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import isObjectEmpty from '../functions/isObjectEmpty.';
 
 const NavBar = () => {
+    const location = useLocation();
     const currentUser = useSelector((state) => state.currentUser.value);
-    return (
-        <nav className="flex items-center justify-between h-16  px-24 bg-gray-900 text-white">
-            <Link to='/' className='hover:text-orange-700'>
-                <h1 className="text-4xl font-['Cinzel'] font-light">Bloggery.</h1>
+    return (<>
+        <nav className="flex items-center justify-between h-16 lg:px-24 px-4 bg-gray-900 text-white">
+            <Link to='/' className='hover:text-orange-700 flex '>
+                <img src='https://www.svgrepo.com/show/54787/bebo.svg' className='h-12 w-12 bg-white mt-1 hover:bg-orange-700' />
+                {location.pathname == '/' ? <h1 className="text-4xl font-['Cinzel'] font-light mt-3">loggery.</h1> : null}
             </Link>
-            <div className="flex items-center space-x-4">
-                <Link to='/create' className='hover:text-orange-700'>
-                    <h1>Create Blog</h1>
-                </Link>
-                <Link to={isObjectEmpty(currentUser) ? '/login' : '/profile'} className='flex items-center hover:text-orange-700'>
-                    {isObjectEmpty(currentUser) ? (
-                        "Login"
-                    ) : (
-                        <>
-                            <AccountCircleIcon />
-                            <span className='ml-1 text-sm'>{currentUser.userName}</span>
-                        </>
-                    )}
-                </Link>
+            {
+                location.pathname != '/start' ? <>
+                    <div className="flex items-center space-x-4">
+                        <Link to='/create' className='hover:text-orange-700'>
+                            <h1>Create Blog</h1>
+                        </Link>
+                        <Link to={isObjectEmpty(currentUser) ? '/login' : '/profile'} className='flex items-center hover:text-orange-700'>
+                            {isObjectEmpty(currentUser) ? (
+                                "Login"
+                            ) : (
+                                <>
+                                    <AccountCircleIcon />
+                                    <span className='ml-1 text-sm capitalize'>{currentUser.userName}</span>
+                                </>
+                            )}
+                        </Link>
 
-            </div>
+                    </div>
+                </> : null
+            }
         </nav>
+    </>
     );
 };
 

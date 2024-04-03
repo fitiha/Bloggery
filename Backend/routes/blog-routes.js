@@ -1,5 +1,5 @@
 import express from "express";
-import { clearBlogs, deleteBlog, getAllBlogs, getAllLikes, getBlogById, getBlogByUserId, getBlogLikes, updateBlog } from "../controllers/blog-controllers.js";
+import { clearBlogs, clearComments, deleteBlog, getAllBlogs, getAllComments, getAllLikes, getBlogById, getBlogByUserId, getBlogLikes, updateBlog } from "../controllers/blog-controllers.js";
 
 const blogRouter = express.Router();
 
@@ -7,6 +7,10 @@ blogRouter.get('/', getAllBlogs);
 
 //related with the likes
 blogRouter.get('/likes', getAllLikes);
+
+//related with the comments 
+blogRouter.get('/comments/all', getAllComments);
+blogRouter.get('/comments/clear', clearComments);
 
 //clear the blogs database
 blogRouter.get('/clear', clearBlogs);

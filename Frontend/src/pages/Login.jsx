@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { addUser } from "../redux/slices/currentUserSlice";
@@ -22,11 +22,11 @@ const Login = () => {
         try {
             const response = await axios.post('http://localhost:5000/api/user/signIn', data);
             toast.success("Login successful");
-            localStorage.setItem('user', JSON.stringify(response.data.userName));
-            localStorage.setItem('userId', JSON.stringify(response.data.userId));
-            localStorage.setItem('email', JSON.stringify(response.data.userEmail));
-            localStorage.setItem('token', JSON.stringify(response.data.token));
-            localStorage.setItem('avatar', JSON.stringify(response.data.avatar));
+            // localStorage.setItem('user', JSON.stringify(response.data.userName));
+            // localStorage.setItem('userId', JSON.stringify(response.data.userId));
+            // localStorage.setItem('email', JSON.stringify(response.data.userEmail));
+            // localStorage.setItem('token', JSON.stringify(response.data.token));
+            // localStorage.setItem('avatar', JSON.stringify(response.data.avatar));
             dispatch(addUser(response.data));
             navigate("/");
         } catch (err) {
@@ -36,22 +36,22 @@ const Login = () => {
     };
 
     // rehydrate the store if refreshed
-    useEffect(() => {
-        const user = JSON.parse(localStorage.getItem('user'));
-        const token = JSON.parse(localStorage.getItem('token'));
-        const userId = JSON.parse(localStorage.getItem('userId'));
-        const email = JSON.parse(localStorage.getItem('email'));
-        const avatar = JSON.parse(localStorage.getItem('avatar'));
+    // useEffect(() => {
+    //     const user = JSON.parse(localStorage.getItem('user'));
+    //     const token = JSON.parse(localStorage.getItem('token'));
+    //     const userId = JSON.parse(localStorage.getItem('userId'));
+    //     const email = JSON.parse(localStorage.getItem('email'));
+    //     const avatar = JSON.parse(localStorage.getItem('avatar'));
 
-        if (user && token) {
-            dispatch(addUser({ userName: user, token: token, userId: userId, userEmail: email, avatar: avatar }));
-        }
-    }, []);
+    //     if (user && token) {
+    //         dispatch(addUser({ userName: user, token: token, userId: userId, userEmail: email, avatar: avatar }));
+    //     }
+    // }, []);
 
     return (
         <>
-            <div className="px-24">
-                <div className="flex justify-start items-center ml-16 mt-8">
+            <div className="px-4 lg:px-24">
+                <div className="flex justify-start items-center lg:ml-16 mt-8">
                     <Link to={'/'}>
                         <ArrowBackIcon className="text-gray-600 hover:text-blue-500" style={{ fontSize: '2rem' }} />
                     </Link>

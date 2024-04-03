@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
     value: {},
+    comments: [],
 }
 
 export const currentBlogsSlice = createSlice({
@@ -24,9 +25,21 @@ export const currentBlogsSlice = createSlice({
             const blogIndex = blogs.findIndex(blog => blog._id === action.payload.id);
             --blogs[blogIndex].likes;
         },
+        setComments: (state, action) => {
+            state.comments = action.payload;
+        },
+        addComment: (state, action) => {
+            state.comments.push(action.payload)
+        },
+        addReply: (state, action) => {
+            state.comments.find(comment => comment._id == action.payload.commentId).replies.push(action.payload.replyContent)
+        },
+        updateComment: (state, action) => {
+            state.comments.find(comment => comment._id == action.payload.com)._id = action.payload.newCom._id;
+        },
     },
 })
 
-export const { addBlogs, clearBlogs, incrementLikes, decrementLikes } = currentBlogsSlice.actions
+export const { addBlogs, clearBlogs, incrementLikes, decrementLikes, setComments, addComment, addReply, updateComment } = currentBlogsSlice.actions
 
 export default currentBlogsSlice.reducer

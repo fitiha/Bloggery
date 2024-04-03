@@ -37,14 +37,14 @@ const Register = () => {
                 password: data.password,
             });
             if (response.status === 200) {
-                localStorage.setItem('user', JSON.stringify(response.data.userName));
-                localStorage.setItem('userId', JSON.stringify(response.data.userId));
-                localStorage.setItem('email', JSON.stringify(response.data.userEmail));
-                localStorage.setItem('token', JSON.stringify(response.data.token));
-                if (response.data.avatar !== undefined)
-                    localStorage.setItem('avatar', JSON.stringify(response.data.avatar));
-                else
-                    localStorage.setItem('avatar', JSON.stringify("avatar-1711723265978"));
+                // localStorage.setItem('user', JSON.stringify(response.data.userName));
+                // localStorage.setItem('userId', JSON.stringify(response.data.userId));
+                // localStorage.setItem('email', JSON.stringify(response.data.userEmail));
+                // localStorage.setItem('token', JSON.stringify(response.data.token));
+                // if (response.data.avatar !== undefined)
+                //     localStorage.setItem('avatar', JSON.stringify(response.data.avatar));
+                // else
+                //     localStorage.setItem('avatar', JSON.stringify("avatar-1711723265978"));
                 toast.success("Registered successfully");
                 dispatch(addUser(response.data));
                 navigate('/');
@@ -58,7 +58,7 @@ const Register = () => {
 
     return (
         <>
-            <div className="flex justify-start items-center ml-16 mt-8">
+            <div className="flex justify-start items-center ml-4 lg:ml-16 mt-8">
                 <Link to={'/'}>
                     <ArrowBackIcon className="text-gray-600 hover:text-blue-500" style={{ fontSize: '2rem' }} />
                 </Link>
@@ -110,8 +110,8 @@ const Register = () => {
                             <Button
                                 type="submit"
                                 variant="contained"
-                                color="primary"
                                 className="mt-4 w-full"
+                                sx={{ backgroundColor: 'orange.400' }}
                             >
                                 Submit
                             </Button>

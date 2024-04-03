@@ -6,8 +6,8 @@ import { useLocation } from 'react-router-dom';
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { addUser } from "../redux/slices/currentUserSlice";
-import { addBlogs, decrementLikes, incrementLikes } from "../redux/slices/currentBlogsSlice";
+// import { addUser } from "../redux/slices/currentUserSlice";
+import { addBlogs, decrementLikes, incrementLikes, setComments } from "../redux/slices/currentBlogsSlice";
 import { toast } from 'react-toastify';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -15,16 +15,17 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
+import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
 import { formatDistanceToNow } from 'date-fns';
 import isObjectEmpty from '../functions/isObjectEmpty.'
 import { IconButton } from "@mui/material";
+import FavoriteBorderRounded from "@mui/icons-material/FavoriteBorderRounded";
 
 const Home = () => {
     const [label, setLabel] = useState("Categories");
     const [data, setData] = useState([]);
 
     const [likedBlogs, setLikedBlogs] = useState({});
-    // const [likeAmt, setLikeAmt] = useState(0);
     const dispatch = useDispatch();
     const [anchorEl, setAnchorEl] = useState(null);
     const location = useLocation();
@@ -74,6 +75,15 @@ const Home = () => {
         }
     };
 
+    //storing all comments in the store
+    useEffect(() => {
+        axios.get('http://localhost:5000/api/blog/comments/all')
+            .then((response) => {
+                dispatch(setComments(response.data.allComments))
+            })
+            .catch(err => console.log("error: ", err))
+    })
+
     useEffect(() => {
         if (!isObjectEmpty(userInTheStore)) {
             axios.get(`http://localhost:5000/api/user/likes/${userInTheStore.userId}`)
@@ -101,18 +111,6 @@ const Home = () => {
             });
     }, [])
 
-    // if the user refreshes the page fetch the login data from the local storage and add it to the store
-    useEffect(() => {
-        const user = JSON.parse(localStorage.getItem('user'));
-        const token = JSON.parse(localStorage.getItem('token'));
-        const userId = JSON.parse(localStorage.getItem('userId'));
-        const email = JSON.parse(localStorage.getItem('email'));
-
-        if (user && token) {
-            dispatch(addUser({ userName: user, token: token, userId: userId, userEmail: email }));
-        }
-    }, []);
-
     const handleMenu = (event) => {
         setAnchorEl(event.currentTarget);
     };
@@ -125,10 +123,10 @@ const Home = () => {
         setData(prevBlogs => prevBlogs.filter(blog => blog.category == e.target.innerText));
     };
 
-    return (
-        <div className="px-24 pt-8 min-h-screen bg-gray-100">
+    return (<>
+        <div className="px-4 lg:px-24 pt-8 min-h-screen bg-gray-100">
             <Typography variant="h4" gutterBottom className="font-light text-4xl flex items-center justify-between">
-                <h1 className="font-['Quattrocento'] font-bold">  Latest Blogs</h1>
+                <h1 className="font-['Quattrocento'] font-bold text-orange-800">  Latest Blogs</h1>
                 <div>
                     {location.pathname == "/" &&
                         <div>
@@ -151,15 +149,15 @@ const Home = () => {
                 {
                     data.length < 1 ?
                         <h1>No Blogs in this category</h1> :
-                        (data.slice().reverse().map((blog) => (<>
-                            <Card key={blog._id} className="bg-gray-100 hover:shadow-lg transition-shadow flex flex-col">
-                                <div className="hover:bg-gray-100 flex-grow">
+                        (data.slice().reverse().map((blog, index) => (<div key={index}>
+                            <Card key={index} className="bg-gray-100 hover:shadow-xl transition-shadow flex flex-col">
+                                <div className="hover:bg-gray-900 bg-gray-950 text-gray-100 flex-grow h-40">
                                     <Link to={`/detail/${blog._id}`}>
                                         <CardContent>
-                                            <Typography variant="h5" component="div" className="capitalize line-clamp-2" >
-                                                <p className="font-['Quattrocento']"> {blog.title}</p>
+                                            <Typography variant="h5" component="div" className="capitalize" >
+                                                <p className="font-['Quattrocento']  line-clamp-1"> {blog.title}</p>
                                             </Typography>
-                                            <Typography variant="body2" color="text.secondary" className="line-clamp-2 mt-2">
+                                            <Typography variant="body2" className="line-clamp-2 mt-2">
                                                 <p className="font-['Quattrocento']">{blog.content}</p>
                                             </Typography>
                                             <Typography variant="overline" display="block" className="mt-4">
@@ -169,23 +167,24 @@ const Home = () => {
                                     </Link>
                                 </div>
                                 <hr className="bg-gray-100" />
-                                <CardActions className="mt-auto flex items-center justify-between mx-4">
-                                    <span className="text-sm text-green-600">{formatDistanceToNow(new Date(blog.createdAt), { addSuffix: true })}</span>
+                                <CardActions className="mt-auto bg-gray-950 flex items-center justify-between px-4 flex-grow">
+                                    <span className="text-sm text-gray-300 ml-3">{formatDistanceToNow(new Date(blog.createdAt), { addSuffix: true })}</span>
 
                                     <div className="flex gap-1 mr-4">
                                         <span className="pt-2 after:bg-red-300">{blog.likes}</span>
                                         <IconButton onClickCapture={() => toggleLike(blog._id)} className="p-8">
-                                            {likedBlogs[blog._id] ? <FavoriteOutlinedIcon sx={{ color: 'red' }} /> : <FavoriteBorderOutlinedIcon />}
+                                            {likedBlogs[blog._id] ? <FavoriteOutlinedIcon sx={{ color: 'red' }} /> : <FavoriteBorderRounded sx={{ color: 'white' }} />}
                                         </IconButton>
                                     </div>
 
                                 </CardActions>
                             </Card>
-                        </>
+                        </div>
                         )))
                 }
             </div>
         </div>
+    </>
     );
 };
 

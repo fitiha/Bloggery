@@ -4,17 +4,24 @@ import jwt from 'jsonwebtoken';
 import blogModel from '../models/blogModel.js';
 import mongoose from 'mongoose';
 import likeModel from '../models/likeModel.js';
+import validator from 'validator';
+import commentModel from '../models/commentModel.js';
 
 export const createUser = async (req, res, next) => {
     try {
         const { name, email, password } = req.body;
 
-        const anyNull = Object.values(req.body).some(value => value === null || value === undefined || value === "");
+        // const anyNull = Object.values(req.body).some(value => value === null || value === undefined || value === "");
+        const anyNull = validator.isEmpty(name) || validator.isEmpty(email) || validator.isEmpty(password);
         if (anyNull) {
             return res.status(400).json({
                 error: "Bad Request",
                 message: "Some properties in the request body are null or undefined. Please provide valid values for all properties."
             });
+        }
+
+        if (validator.isEmail(email) === false) {
+            return res.status(400).send("Invalid email address. Please provide a valid email address.");
         }
 
         const existingUser = await userModel.findOne({ email });
@@ -32,7 +39,7 @@ export const createUser = async (req, res, next) => {
             email,
             password: hashedPassword,
             blog: [],
-            avatar: "avatar-1711788042524"
+            avatar: "avatar-1711788042524.jpg"
         });
 
         // Save the new user
@@ -209,4 +216,42 @@ export const likedBlogs = (req, res) => {
             console.error(err);
             res.status(500).json({ message: 'Error fetching liked blogs.' });
         });
+}
+
+// comment Controller
+export const makeComment = async (req, res, next) => {
+    const { content, userId, blogId } = req.body;
+
+    const newComment = new commentModel({
+        content: content,
+        userId: userId,
+        blogId: blogId,
+    });
+
+    try {
+        const response = await newComment.save();
+        const newC = await commentModel.findById(response._id).populate('userId', "name avatar");
+        res.status(200).json({ postedComment: newC, message: "Successfully commented." })
+    } catch (err) {
+        res.json({ message: err })
+    }
+}
+
+// make a reply
+export const makeReply = async (req, res, next) => {
+    const id = req.params.id; // for which comment are you making the reply
+    const { content, userId } = req.body; // who are you and what's your reply
+    try {
+        const updatedComment = await commentModel.findByIdAndUpdate(id, {
+            $push: {
+                replies: {
+                    content: content,
+                    userId: userId,
+                }
+            }
+        }, { new: true });
+        res.status(200).json({ updatedComment })
+    } catch (err) {
+        res.json({ err: err });
+    }
 }

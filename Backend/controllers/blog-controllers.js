@@ -1,4 +1,5 @@
 import blogModel from "../models/blogModel.js";
+import commentModel from "../models/commentModel.js";
 import likeModel from "../models/likeModel.js";
 
 export const getAllBlogs = async (req, res, next) => {
@@ -59,6 +60,15 @@ export const clearBlogs = async (req, res, next) => {
     }
 }
 
+export const clearComments = async (req, res, next) => {
+    try {
+        await commentModel.deleteMany();
+        res.status(200).json({ message: "All comments deleted successfully" })
+    } catch (err) {
+        res.json({ error: err })
+    }
+}
+
 export const getBlogByUserId = async (req, res, next) => {
     try {
         const blog = await blogModel.find({ userId: req.params.id });
@@ -97,3 +107,15 @@ export const getBlogLikes = async (req, res, next) => {
     }
 }
 
+
+
+//related with the comments
+export const getAllComments = async (req, res, next) => {
+    try {
+        const allComments = await commentModel.find().populate('userId', 'name avatar').populate('replies.userId', 'name avatar').exec();
+        res.json({ allComments: allComments });
+    }
+    catch (err) {
+        res.json({ message: err });
+    }
+}

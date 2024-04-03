@@ -1,9 +1,9 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import isObjectEmpty from '../functions/isObjectEmpty.';
-import { addUser } from "../redux/slices/currentUserSlice";
+// import isObjectEmpty from '../functions/isObjectEmpty.';
+// import { addUser } from "../redux/slices/currentUserSlice";
 import { toast } from "react-toastify";
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
@@ -12,26 +12,26 @@ import { InputLabel, MenuItem, Select } from "@mui/material";
 
 const CreateBlog = () => {
     const navigate = useNavigate();
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
     const [data, setData] = useState({});
     const currentUser = useSelector((state) => state.currentUser.value);
     const categories = ['Technology', 'Health', 'Science', 'Business', 'Entertainment', 'Sports', 'Education', 'Lifestyle', 'Travel', 'Fashion', 'Food', 'Music', 'Politics', 'Art', 'Environment', 'Others'];
 
     // rehydrate the store if page is refreshed or if the token is expired navigate to login page
-    useEffect(() => {
-        const user = JSON.parse(localStorage.getItem('user'));
-        const token = JSON.parse(localStorage.getItem('token'));
-        const userId = JSON.parse(localStorage.getItem('userId'));
-        const email = JSON.parse(localStorage.getItem('email'));
+    // useEffect(() => {
+    //     const user = JSON.parse(localStorage.getItem('user'));
+    //     const token = JSON.parse(localStorage.getItem('token'));
+    //     const userId = JSON.parse(localStorage.getItem('userId'));
+    //     const email = JSON.parse(localStorage.getItem('email'));
 
-        if (user && token) {
-            dispatch(addUser({ userName: user, token: token, userId: userId, userEmail: email }));
-        }
+    //     if (user && token) {
+    //         dispatch(addUser({ userName: user, token: token, userId: userId, userEmail: email }));
+    //     }
 
-        if (isObjectEmpty(currentUser)) {
-            navigate('/register');
-        }
-    }, []);
+    //     if (isObjectEmpty(currentUser)) {
+    //         navigate('/register');
+    //     }
+    // }, []);
 
     const handleChange = (e) => {
         setData({ ...data, [e.target.name]: e.target.value, userId: currentUser.userId, author: currentUser.userName });
