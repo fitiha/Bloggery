@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useParams } from "react-router-dom";
 import { InputLabel, MenuItem, Select } from "@mui/material";
@@ -18,7 +17,7 @@ const EditBlog = () => {
     const { id } = useParams();
 
     useEffect(() => {
-        axios.get(`http://localhost:5000/api/blog/${id}`)
+        axios.get(`https://bloggery-a3xc.onrender.com/api/blog/${id}`)
             .then((response) => {
                 setBlogData(response.data.blog);
             })
@@ -35,7 +34,7 @@ const EditBlog = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.put(`http://localhost:5000/api/blog/${id}`, newData, {
+            await axios.put(`https://bloggery-a3xc.onrender.com/api/blog/${id}`, newData, {
                 headers: { authorization: `Bearer ${currentUser.token}` }
             });
             navigate('/profile');

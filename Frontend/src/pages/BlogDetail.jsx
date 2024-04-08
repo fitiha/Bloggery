@@ -60,7 +60,7 @@ const BlogDetail = () => {
                 setReplyContent('');
 
                 dispatch(addReply({ commentId: commentId, replyContent: newReplyForStore }))
-                await axios.post(`http://localhost:5000/api/user/reply/${commentId}`, newReplyForDb);
+                await axios.post(`https://bloggery-a3xc.onrender.com/api/user/reply/${commentId}`, newReplyForDb);
                 setActiveCommentId(null);
             }
         }
@@ -113,7 +113,7 @@ const BlogDetail = () => {
                 }
 
                 try {
-                    const postedComment = await axios.post("http://localhost:5000/api/user/comment", commentForDb)
+                    const postedComment = await axios.post("https://bloggery-a3xc.onrender.com/api/user/comment", commentForDb)
                     dispatch(updateComment({ com: commentForStore._id, newCom: postedComment.data.postedComment }));
                     setC("");
                 }
@@ -141,7 +141,7 @@ const BlogDetail = () => {
                 blogId: bId,
                 userId: userInTheStore.userId
             };
-            const result = await axios.post("http://localhost:5000/api/user/like", likeMessage)
+            const result = await axios.post("https://bloggery-a3xc.onrender.com/api/user/like", likeMessage)
             console.log("like result: ", result)
         } else {
             toast.warn("Login or signup to complete this operation.")
@@ -156,7 +156,7 @@ const BlogDetail = () => {
                 blogId: bId,
                 userId: userInTheStore.userId
             };
-            const result = await axios.post("http://localhost:5000/api/user/unlike", likeMessage)
+            const result = await axios.post("https://bloggery-a3xc.onrender.com/api/user/unlike", likeMessage)
             console.log("Unlike result: ", result)
         } else {
             toast.warn("Login or signup to complete this operation.")
@@ -169,13 +169,13 @@ const BlogDetail = () => {
                 const tempId = Math.floor(1000 + Math.random() * 9000);
                 setButtonLabel("Following")
                 dispatch(addFollowing({ _id: tempId, followerId: userInTheStore.userId, followingId: blog.userId._id }));
-                const response = await axios.post('http://localhost:5000/api/user/follow', { followerId: userInTheStore.userId, followingId: blog.userId._id })
+                const response = await axios.post('https://bloggery-a3xc.onrender.com/api/user/follow', { followerId: userInTheStore.userId, followingId: blog.userId._id })
                 dispatch(updateFollowing({ tempId: tempId, newFollowing: response.data.followed }))
                 console.log("response of following: ", response);
             } else {
                 setButtonLabel("Follow")
                 dispatch(removeFollowing({ followerId: userInTheStore.userId, followingId: blog.userId._id }))
-                const response = await axios.post('http://localhost:5000/api/user/unfollow', { followerId: userInTheStore.userId, followingId: blog.userId._id })
+                const response = await axios.post('https://bloggery-a3xc.onrender.com/api/user/unfollow', { followerId: userInTheStore.userId, followingId: blog.userId._id })
                 console.log("response of un following: ", response);
             }
         } else {
@@ -226,7 +226,8 @@ const BlogDetail = () => {
                         <div className="bg-zinc-900 h-fit rounded-3xl p-4 h-32">
                             <h1 className="text-xl font-light text-orange-500">About the author</h1>
                             <div className="lg:pl-3 flex lg:flex-row flex-col">
-                                <Avatar src={`http://localhost:5000/uploads/${blog.userId.avatar}`} sx={{ width: 80, height: 80 }} className="mt-1.5" />
+                                {/* <Avatar src={`http://localhost:5000/uploads/${blog.userId.avatar}`} sx={{ width: 80, height: 80 }} className="mt-1.5" /> */}
+                                <Avatar src={`https://bloggery-a3xc.onrender.com/uploads/${blog.userId.avatar}`} sx={{ width: 80, height: 80 }} className="mt-1.5" />
                                 <div className="float-right ml-3 mt-4 text-lg">
                                     <p className=" font-bold">{blog.author}</p>
                                     <p className=" font-light">{followers.length} Followers</p>
@@ -256,7 +257,8 @@ const BlogDetail = () => {
 
                                 <div className="flex flex-col gap-1">
                                     <div className="flex rounded-lg text-sm ">
-                                        <Avatar src={`http://localhost:5000/uploads/${comment.userId.avatar}`} sx={{ width: 24, height: 24 }} className="mt-1.5" />
+                                        {/* <Avatar src={`http://localhost:5000/uploads/${comment.userId.avatar}`} sx={{ width: 24, height: 24 }} className="mt-1.5" /> */}
+                                        <Avatar src={`https://bloggery-a3xc.onrender.com/uploads/${comment.userId.avatar}`} sx={{ width: 24, height: 24 }} className="mt-1.5" />
                                         <div className="flex px-2 pt-1">
                                             <p className="mr-2 font-bold">{comment.userId.name}</p>
                                             <div>
@@ -288,7 +290,8 @@ const BlogDetail = () => {
                                     <div >
                                         {(comment.replies) ? comment.replies.map((reply, index) => (<div key={index} className="flex ml-16 my-1">
 
-                                            <Avatar src={`http://localhost:5000/uploads/${reply.userId.avatar}`} sx={{ width: 24, height: 24 }} />
+                                            {/* <Avatar src={`http://localhost:5000/uploads/${reply.userId.avatar}`} sx={{ width: 24, height: 24 }} /> */}
+                                            <Avatar src={`https://bloggery-a3xc.onrender.com/uploads/${reply.userId.avatar}`} sx={{ width: 24, height: 24 }} />
 
                                             <div className="flex pl-2 pr-2 mt-0.5 leading-none text-sm">
                                                 <p className="mr-2 font-bold">{reply.userId.name}</p>

@@ -20,7 +20,7 @@ const CreateBlog = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('http://localhost:5000/api/user/create', data, {
+            await axios.post('https://bloggery-a3xc.onrender.com/api/user/create', data, {
                 headers: { authorization: `Bearer ${currentUser.token}` }
             });
             navigate('/home');

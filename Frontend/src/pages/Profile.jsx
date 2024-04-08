@@ -43,7 +43,7 @@ const Profile = (props) => {
 
     useEffect(() => {
         if (props.userType == "user") {
-            axios.get(`http://localhost:5000/api/user/${currentUser.userId}`)
+            axios.get(`https://bloggery-a3xc.onrender.com/api/user/${currentUser.userId}`)
                 .then((response) => {
                     setData(response.data.user);
                     console.log("response of user data", response.data.user)
@@ -54,7 +54,7 @@ const Profile = (props) => {
 
     useEffect(() => {
         if (props.userType == "user") {
-            axios.get(`http://localhost:5000/api/blog/user/${currentUser.userId}`)
+            axios.get(`https://bloggery-a3xc.onrender.com/api/blog/user/${currentUser.userId}`)
                 .then((response) => {
                     setBlogs(response.data.blog);
                 })
@@ -75,7 +75,7 @@ const Profile = (props) => {
 
     const handleConfirmDelete = async (blogId) => {
         try {
-            await axios.delete(`http://localhost:5000/api/blog/${blogId}`);
+            await axios.delete(`https://bloggery-a3xc.onrender.com/api/blog/${blogId}`);
             setBlogs(prevBlogs => prevBlogs.filter(blog => blog._id !== blogId));
         } catch (error) {
             console.error('Error deleting blog:', error.message);
@@ -113,7 +113,7 @@ const Profile = (props) => {
                     <div className="flex-col mx-8 w-full lg:w-3/5 sm:w-4/5 md:w-3/5 xs:w-4/5 h-auto p-8 rounded-t-3xl bg-gray-950">
                         <img
 
-                            src={props.userType == "user" ? `http://localhost:5000/uploads/${currentUser.avatar}` : 'http://localhost:5000/uploads/avatar-1711788042524.jpg'}
+                            src={props.userType == "user" ? `https://bloggery-a3xc.onrender.com/uploads/${currentUser.avatar}` : 'https://bloggery-a3xc.onrender.com/uploads/avatar-1711788042524.jpg'}
                             alt={data.name}
                             className="h-44 w-44 float-left mr-8 rounded-full border-8 border-gray-300 hover:blur-sm"
                         />

@@ -53,7 +53,7 @@ const Home = () => {
             dispatch(incrementLikes({ id: bId }));
             dispatch(like({ id: bId }))
             setData(blogsInTheStore.map((blog) => blog._id === bId ? { ...blog, likes: blog.likes + 1 } : blog));
-            axios.post("http://localhost:5000/api/user/like", likeMessage)
+            axios.post("https://bloggery-a3xc.onrender.com/api/user/like", likeMessage)
                 .then((response) => {
                     console.log(response.data.message);
                     // toast.success(response.data.message);
@@ -65,7 +65,7 @@ const Home = () => {
         } else {
             dispatch(decrementLikes({ id: bId }));
             setData(blogsInTheStore.map((blog) => blog._id === bId ? { ...blog, likes: blog.likes - 1 } : blog));
-            axios.post("http://localhost:5000/api/user/unlike", likeMessage)
+            axios.post("https://bloggery-a3xc.onrender.com/api/user/unlike", likeMessage)
                 .then((response) => {
                     // toast.success(response.data.message);
                     console.log(response.data.message);
@@ -79,13 +79,13 @@ const Home = () => {
     // storing all comments in the store
     useEffect(() => {
         setIsLoading(true);
-        axios.get('http://localhost:5000/api/blog/comments/all')
+        axios.get('https://bloggery-a3xc.onrender.com/api/blog/comments/all')
             .then((response) => {
                 dispatch(setComments(response.data.allComments))
                 setIsLoading(false)
             })
             .catch(err => console.log("error: ", err));
-        axios.get('http://localhost:5000/api/user/allfollows')
+        axios.get('https://bloggery-a3xc.onrender.com/api/user/allfollows')
             .then((response) => {
                 dispatch(setFollowings(response.data.allFollowingData))
             })
@@ -95,7 +95,7 @@ const Home = () => {
     useEffect(() => {
         setIsLoading(true);
         if (!isObjectEmpty(userInTheStore)) {
-            axios.get(`http://localhost:5000/api/user/likes/${userInTheStore.userId}`)
+            axios.get(`https://bloggery-a3xc.onrender.com/api/user/likes/${userInTheStore.userId}`)
                 .then((d) => {
                     const lBlog = d.data.response.map((blog) => blog.blogId);
                     lBlog.forEach((blogId) => {
@@ -114,7 +114,7 @@ const Home = () => {
 
     useEffect(() => {
         setIsLoading(true)
-        axios.get("http://localhost:5000/api/blog")
+        axios.get("https://bloggery-a3xc.onrender.com/api/blog")
             .then((response) => {
                 setData(response.data.blogs);
                 dispatch(addBlogs(response.data.blogs))

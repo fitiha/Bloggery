@@ -11,7 +11,8 @@ const ManageUsers = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/api/user');
+                // const response = await axios.get('http://localhost:5000/api/user');
+                const response = await axios.get('https://bloggery-a3xc.onrender.com/api/user');
                 setUsers(response.data.users);
             } catch (err) {
                 console.log(err.message);

@@ -31,7 +31,7 @@ const Register = () => {
             return;
         }
         try {
-            const response = await axios.post('http://localhost:5000/api/user/signup', {
+            const response = await axios.post('https://bloggery-a3xc.onrender.com/api/user/signup', {
                 name: data.name,
                 email: data.email,
                 password: data.password,

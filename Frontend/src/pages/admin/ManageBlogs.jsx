@@ -10,7 +10,8 @@ const ManageBlogs = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/api/blog');
+                // const response = await axios.get('http://localhost:5000/api/blog');
+                const response = await axios.get('https://bloggery-a3xc.onrender.com/api/blog');
                 setBlogs(response.data.blogs); // Assuming the response directly contains an array of blogs
                 console.log(response.data.blogs); //)
             } catch (err) {

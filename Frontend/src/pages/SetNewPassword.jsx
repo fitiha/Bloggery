@@ -20,7 +20,7 @@ const SetNewPassword = () => {
             toast.warn("Passwords don't match");
         else {
             try {
-                const response = await axios.post(`http://localhost:5000/api/user/change`, { userId: currentUser._id, newPassword: cNewPass });
+                const response = await axios.post(`https://bloggery-a3xc.onrender.com/api/user/change`, { userId: currentUser._id, newPassword: cNewPass });
                 console.log("change password: ", response)
                 if (response.status == 200) {
                     toast.success("Successfully changed the password.")

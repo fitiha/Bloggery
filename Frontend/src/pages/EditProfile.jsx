@@ -52,7 +52,7 @@ const EditProfile = () => {
         }
 
         try {
-            const response = await axios.patch(`http://localhost:5000/api/user/update/${currentUser.userId}`, dataToSend, {
+            const response = await axios.patch(`https://bloggery-a3xc.onrender.com/api/user/update/${currentUser.userId}`, dataToSend, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
@@ -78,7 +78,7 @@ const EditProfile = () => {
             <div className="flex justify-center mt-4">
                 <div className="flex lg:flex-row md:flex-row sm:flex-col lg:mx-8 w-full lg:w-3/5 sm:w-4/5 md:w-3/5 xs:w-4/5 w-2/5 h-auto p-8 rounded-t-3xl bg-gray-950">
                     <img
-                        src={`http://localhost:5000/uploads/${currentUser.avatar}`}
+                        src={`https://bloggery-a3xc.onrender.com/uploads/${currentUser.avatar}`}
                         alt={currentUser.name}
                         className="h-44 w-44 float-left mr-8 rounded-full border-8 border-gray-300 hover:blur-sm"
                     />

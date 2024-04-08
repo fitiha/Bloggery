@@ -14,7 +14,7 @@ const ChangePassword = () => {
 
     const handleCheck = async () => {
         try {
-            const response = await axios.post('http://localhost:5000/api/user/checkpassword', { email: currentUser.userEmail, password: ppas })
+            const response = await axios.post('https://bloggery-a3xc.onrender.com/api/user/checkpassword', { email: currentUser.userEmail, password: ppas })
             console.log("password status: ", response)
             if (response.status == 200)
                 navigate('/set-new-password')

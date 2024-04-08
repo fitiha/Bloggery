@@ -32,7 +32,8 @@ const NavBar = () => {
                                 ) : (
                                     <>
                                         {/* <AccountCircleIcon /> */}
-                                        <Avatar src={`http://localhost:5000/uploads/${currentUser.avatar}`} alt="avatar" sx={{ width: 30, height: 30 }} />
+                                        {/* <Avatar src={`http://localhost:5000/uploads/${currentUser.avatar}`} alt="avatar" sx={{ width: 30, height: 30 }} /> */}
+                                        <Avatar src={`https://bloggery-a3xc.onrender.com/uploads/${currentUser.avatar}`} alt="avatar" sx={{ width: 30, height: 30 }} />
                                         <span className='ml-1 mb-1 text-sm capitalize font-bold'>{currentUser.userName}</span>
                                     </>
                                 )}

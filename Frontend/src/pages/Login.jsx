@@ -21,7 +21,7 @@ const Login = (props) => {
         try {
             // eslint-disable-next-line react/prop-types
             if (props.userType == "user") {
-                const response = await axios.post('http://localhost:5000/api/user/signIn', data);
+                const response = await axios.post('https://bloggery-a3xc.onrender.com/api/user/signIn', data);
                 toast.success("Login successful");
                 dispatch(clearState());
                 dispatch(addUser(response.data));
@@ -30,7 +30,7 @@ const Login = (props) => {
             // eslint-disable-next-line react/prop-types
             if (props.userType == "admin") {
                 console.log("handling admin login")
-                const response = await axios.post('http://localhost:5000/api/user/admin/login', data);
+                const response = await axios.post('https://bloggery-a3xc.onrender.com/api/user/admin/login', data);
                 if (response.status == 200) {
                     toast.success("");
                     dispatch(clearState());
