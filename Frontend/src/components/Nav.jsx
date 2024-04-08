@@ -13,7 +13,7 @@ const NavBar = () => {
 
             <nav className="flex items-center justify-between h-16 lg:px-24 px-4 bg-zinc-950 text-white">
                 <Link to='/home' className='hover:text-orange-700 flex '>
-                    <img src='https://www.svgrepo.com/show/54787/bebo.svg' className='h-12 w-12 bg-white mt-1 hover:bg-orange-700' />
+                    <img src='https://www.svgrepo.com/show/54787/bebo.svg' alt="logo" className='h-12 w-12 bg-white mt-1 hover:bg-orange-700' />
                     {location.pathname == '/home' ? <h1 className="text-4xl font-['Cinzel'] font-light mt-3">loggery.</h1> : null}
                 </Link>
                 {
@@ -32,7 +32,7 @@ const NavBar = () => {
                                 ) : (
                                     <>
                                         {/* <AccountCircleIcon /> */}
-                                        <Avatar src={`http://localhost:5000/uploads/${currentUser.avatar}`} sx={{ width: 30, height: 30 }} />
+                                        <Avatar src={`http://localhost:5000/uploads/${currentUser.avatar}`} alt="avatar" sx={{ width: 30, height: 30 }} />
                                         <span className='ml-1 mb-1 text-sm capitalize font-bold'>{currentUser.userName}</span>
                                     </>
                                 )}
