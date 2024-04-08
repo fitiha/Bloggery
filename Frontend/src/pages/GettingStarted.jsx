@@ -2,9 +2,9 @@ import { Link } from 'react-router-dom';
 
 const GettingStarted = () => {
     return (<>
-        <div className='flex items-center lg:gap-12 gap-4 justify-end bg-gray-900 text-gray-100 lg:text-xl sm:text-md h-16 px-8 z-100'>
+        <div className='flex items-center lg:gap-12 gap-4 justify-end bg-gray-900 text-gray-100 lg:text-xl md:text-xl text-sm h-16 px-8 z-100'>
             <h1 className=''>Home</h1>
-            <h1 className='hover:text-orange-700'>Contact us</h1>
+            <h1 className='hover:text-orange-700'>Contact</h1>
             <h1 className='hover:text-orange-700'>Testimonials</h1>
             <h1 className='hover:text-orange-700'>Developer</h1>
         </div>
