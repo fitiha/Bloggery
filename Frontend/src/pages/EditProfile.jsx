@@ -69,7 +69,7 @@ const EditProfile = () => {
     console.log("data to send ", formData)
 
     return (
-        <div className="lg:px-24 pb-8">
+        <div className="lg:px-24 px-4 pb-8">
             <div className="flex justify-start items-center ml-4 lg:ml-16 mt-4">
                 <Link to={'/profile'}>
                     <ArrowBackIcon className="text-gray-600 hover:text-blue-500" style={{ fontSize: '2rem' }} />
@@ -85,9 +85,9 @@ const EditProfile = () => {
 
                     <div className="flex-col pt-2 text-gray-300">
                         <h1 className="text-3xl mt-4 font-bold leading-relaxed">{currentUser.userName}</h1>
-                        <h1 className="text-xl font-light mb-8">{currentUser.userEmail}</h1>
+                        <h1 className="text-xl font-light lg:mb-8">{currentUser.userEmail}</h1>
                     </div>
-                    <div className="lg:ml-32 mt-8 text-gray-300 flex flex-col gap-4">
+                    <div className="lg:ml-32 lg:mt-8 md:mt-6 mt-3 text-gray-300 flex flex-col gap-4">
                         <Link to='/change-password'>
                             <KeyIcon className="mx-2 mb-1" />
                             <button className="hover:text-gray-100 pt-2 " >Change Password</button>

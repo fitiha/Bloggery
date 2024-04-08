@@ -121,11 +121,11 @@ const Profile = (props) => {
                         <div className="flex-col lg:pl-12 text-gray-300">
                             <h1 className="text-3xl mt-4 font-bold leading-relaxed">{data.name}</h1>
                             {props.userType == 'user' && (<>
-                                <h1 className="text-xl font-light mb-2">{data.email}</h1>
-                                <div className="flex lg:gap-8 sm:gap-4 mb-4">
-                                    <h1 className="text-xl font-light"> <span className="font-bold">{blogs.length}</span> Posts</h1>
-                                    <h1 className="text-xl font-light">{followers.length} Followers</h1>
-                                    <h1 className="text-xl font-light">{followings.length} Following</h1>
+                                <h1 className="lg:text-xl text-md font-light mb-2">{data.email}</h1>
+                                <div className="flex lg:gap-8 gap-4 mb-4">
+                                    <h1 className="lg:text-xl text-md font-light"> <span className="font-bold">{blogs.length}</span> Posts</h1>
+                                    <h1 className="lg:text-xl text-md font-light"><span className="font-bold">{followers.length}</span> Followers</h1>
+                                    <h1 className="lg:text-xl text-md font-light"><span className="font-bold">{followings.length}</span> Following</h1>
                                 </div>
                             </>)}
                             <div className="flex gap-4">
