@@ -1,7 +1,6 @@
 
 import { Link } from "react-router-dom"
 
-
 const SidePanel = () => {
     return (<>
         <div className="flex flex-col gap-4 h-screen bg-blue-950 p-8 text-lg rounded-lg text-gray-100 divide-y-2 divide-slate-400/25">

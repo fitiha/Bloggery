@@ -32,6 +32,6 @@ app.use('/api/blog', blogRouter);
 mongoose.connect('mongodb+srv://admin:DGfsDLqhzNQQZ4yW@cluster0.mcijogw.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
     .then(() => {
         console.log('DB got Connected!')
-        app.listen(5000, () => { console.log("Server listening on port 5000") })
+        app.listen(5000, "0.0.0.0", () => { console.log("Server listening on port 5000") })
     })
     .catch((err) => console.log("DB connection error: " + err));

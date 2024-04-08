@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
     value: {},
     comments: [],
+    followings: []
 }
 
 export const currentBlogsSlice = createSlice({
@@ -37,9 +38,24 @@ export const currentBlogsSlice = createSlice({
         updateComment: (state, action) => {
             state.comments.find(comment => comment._id == action.payload.com)._id = action.payload.newCom._id;
         },
+        setFollowings: (state, action) => {
+            state.followings = action.payload
+        },
+        addFollowing: (state, action) => {
+            state.followings.push(action.payload);
+        },
+        updateFollowing: (state, action) => {
+            const index = state.followings.findIndex(f => f._id == action.payload.tempId);
+            if (index !== -1) {
+                state.followings[index] = action.payload.newFollowing;
+            }
+        },
+        removeFollowing: (state, action) => {
+            state.followings = state.followings.filter(f => { f.followerId == action.payload.followerId && f.followingId == action.payload.followingId })
+        }
     },
 })
 
-export const { addBlogs, clearBlogs, incrementLikes, decrementLikes, setComments, addComment, addReply, updateComment } = currentBlogsSlice.actions
+export const { addBlogs, clearBlogs, incrementLikes, decrementLikes, setComments, addComment, addReply, updateComment, setFollowings, addFollowing, updateFollowing, removeFollowing } = currentBlogsSlice.actions
 
 export default currentBlogsSlice.reducer

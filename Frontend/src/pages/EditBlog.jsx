@@ -50,7 +50,7 @@ const EditBlog = () => {
 
     return (<div className="bg-gray-100">
         <div className="flex justify-start items-center ml-4 lg:ml-16 pt-8">
-            <Link to={'/'}>
+            <Link to={'/home'}>
                 <ArrowBackIcon className="text-gray-600 mt-4 hover:text-blue-500" style={{ fontSize: '2rem' }} />
             </Link>
         </div>
@@ -91,13 +91,25 @@ const EditBlog = () => {
                             return <MenuItem key={index} value={category}>{category}</MenuItem>
                         })}
                     </Select>
-                    <div className="flex justify-between">
+                    {/* <div className="flex justify-between">
                         <Button variant="contained" color="primary" type="submit">
                             Submit
                         </Button>
                         <Button variant="outlined" onClick={() => navigate('/profile')}>
                             Cancel
                         </Button>
+                    </div> */}
+                    <div className="flex justify-between">
+                        <button
+                            type="submit"
+                            className="bg-gray-800 text-gray-100 w-36 py-2 rounded-lg font-medium text-lg hover:bg-gray-100 hover:text-gray-950 hover:border hover:border-gray-950 transition-colors"
+                        >
+                            Submit
+                        </button>
+
+                        <button onClick={() => navigate('/profile')} className="border border-gray-900 hover:bg-gray-800 hover:text-gray-100 text-gray-950 w-36 rounded-lg font-medium text-lg transition-colors">
+                            Cancel
+                        </button>
                     </div>
                 </form>
             </div>

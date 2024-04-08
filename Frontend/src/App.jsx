@@ -16,6 +16,8 @@ import { ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import GettingStarted from "./pages/GettingStarted"
 import EditProfile from "./pages/EditProfile"
+import ChangePassword from "./pages/ChangePassword"
+import SetNewPassword from "./pages/SetNewPassword"
 
 
 const App = () => {
@@ -25,18 +27,22 @@ const App = () => {
 
     <ToastContainer />
     <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/start" element={<GettingStarted />} />
-      <Route path="/login" element={<Login />} />
+      <Route path="/" element={<GettingStarted />} />
+      <Route path="/home" element={<Home />} />
+      <Route path="/login" element={<Login userType="user" />} />
       <Route path="/register" element={<Register />} />
       <Route path="/edit-profile" element={<EditProfile />} />
+      <Route path='/change-password' element={<ChangePassword />} />
+      <Route path='/set-new-password' element={<SetNewPassword />} />
       <Route path="/create" element={<CreateBlog />} />
-      <Route path="/profile" element={<Profile />} />
+      <Route path="/profile" element={<Profile userType="user" />} />
       <Route path="/detail/:id" element={<BlogDetail />} />
       <Route path="/edit/:id" element={<EditBlog />} />
 
       {/* Admin Routes */}
       <Route path='/admin/*' element={<Admin />}>
+        <Route path="login" element={<Login userType="admin" />} />
+        <Route path="profile" element={<Profile userType="admin" />} />
         <Route path='users' element={<ManageUsers />} />
         <Route path="blogs" element={<ManageBlogs />} />
       </Route>

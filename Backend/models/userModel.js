@@ -20,7 +20,7 @@ const userSchema = Schema({
     },
     blogs: [{
         type: Schema.Types.ObjectId,
-        ref: 'Blog', // Reference to the Blog model
+        ref: 'Blog',
     }],
 },
     {

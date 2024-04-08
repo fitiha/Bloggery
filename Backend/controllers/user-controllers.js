@@ -6,6 +6,7 @@ import mongoose from 'mongoose';
 import likeModel from '../models/likeModel.js';
 import validator from 'validator';
 import commentModel from '../models/commentModel.js';
+import FollowerModel from '../models/followerModel.js';
 
 export const createUser = async (req, res, next) => {
     try {
@@ -102,18 +103,21 @@ export const getUserById = async (req, res, next) => {
         console.log("invalid id");
 }
 
+
 export const updateUser = async (req, res, next) => {
     const userId = req.params.id;
-
-    // Hash the password
-    const salt = bcrypt.genSaltSync(10);
-    const hashedPassword = bcrypt.hashSync(req.body.password, salt);
-
-    const data = {
-        name: req.body.name,
-        email: req.body.email,
-        password: hashedPassword,
-        avatar: req.file.filename || '',
+    var data;
+    if (req.file) {
+        data = {
+            name: req.body.name,
+            email: req.body.email,
+            avatar: req.file?.filename ?? '',
+        }
+    } else {
+        data = {
+            name: req.body.name,
+            email: req.body.email,
+        }
     }
 
     await userModel.findByIdAndUpdate(userId, data, { new: true })
@@ -253,5 +257,85 @@ export const makeReply = async (req, res, next) => {
         res.status(200).json({ updatedComment })
     } catch (err) {
         res.json({ err: err });
+    }
+}
+
+
+export const adminLogin = (req, res) => {
+    const adminEmail = "admin@admin.nat";
+    const adminPassword = "admin@bloggery";
+    const { email, password } = req.body;
+
+    if (email != adminEmail || password != adminPassword) {
+        res.status(404).json({ message: "Invalid credentials" })
+    }
+
+    res.status(200).json({ message: "Welcome boss!", userName: 'admin' });
+}
+
+
+//related with the following model
+export const followUser = async (req, res) => {
+    try {
+        const newFollowing = await FollowerModel.create({ followerId: req.body.followerId, followingId: req.body.followingId });
+        res.status(200).json({ followed: newFollowing });
+    } catch (err) {
+        res.json({ error: err })
+    }
+}
+
+export const unfollowUser = async (req, res) => {
+    try {
+        const newUnfollow = await FollowerModel.findOneAndDelete({ followerId: req.body.followerId, followingId: req.body.followingId });
+        if (newUnfollow)
+            res.status(200).json({ unfollowed: newUnfollow });
+        else
+            res.send("Couldn't get any data with the provided parameters.")
+    } catch (err) {
+        res.json({ error: err });
+    }
+}
+
+export const getAllFollowingData = async (req, res) => {
+    try {
+        const allFollowingData = await FollowerModel.find();
+        res.status(200).json({ allFollowingData });
+    } catch (err) {
+        res.send(err);
+    }
+}
+
+
+export const checkPassword = (req, res, next) => {
+    const { email, password } = req.body;
+    userModel.findOne({ email })
+        .then((user) => {
+            if (!user) {
+                res.status(404).json({ error: "Can't find a user with this email" });
+            } else {
+                let doPasswordsMatch = bcrypt.compareSync(password, user.password);
+                if (!doPasswordsMatch)
+                    res.status(422).json({ error: "Passwords do not match" });
+                else
+                    res.status(200).json({ message: "Correct Password" });
+            }
+        })
+        .catch((err) => {
+            console.log(err?.message);
+            res.status(500).json({ error: err.message });
+        })
+}
+
+export const changePassword = async (req, res) => {
+    try {
+        const { userId, newPassword } = req.body;
+        // Hash the password
+        const salt = bcrypt.genSaltSync(10);
+        const hashedPassword = bcrypt.hashSync(newPassword, salt);
+
+        const updatedPassword = await userModel.findByIdAndUpdate(userId, { password: hashedPassword }, { new: true })
+        res.send(updatedPassword);
+    } catch (err) {
+        res.send(err)
     }
 }

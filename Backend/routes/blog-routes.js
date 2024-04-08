@@ -7,6 +7,7 @@ blogRouter.get('/', getAllBlogs);
 
 //related with the likes
 blogRouter.get('/likes', getAllLikes);
+// blogRouter.get('/generate/pdf', generatePdf);
 
 //related with the comments 
 blogRouter.get('/comments/all', getAllComments);

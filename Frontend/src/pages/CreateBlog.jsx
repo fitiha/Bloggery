@@ -2,36 +2,16 @@ import axios from "axios";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-// import isObjectEmpty from '../functions/isObjectEmpty.';
-// import { addUser } from "../redux/slices/currentUserSlice";
 import { toast } from "react-toastify";
 import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { InputLabel, MenuItem, Select } from "@mui/material";
 
 const CreateBlog = () => {
     const navigate = useNavigate();
-    // const dispatch = useDispatch();
     const [data, setData] = useState({});
     const currentUser = useSelector((state) => state.currentUser.value);
     const categories = ['Technology', 'Health', 'Science', 'Business', 'Entertainment', 'Sports', 'Education', 'Lifestyle', 'Travel', 'Fashion', 'Food', 'Music', 'Politics', 'Art', 'Environment', 'Others'];
-
-    // rehydrate the store if page is refreshed or if the token is expired navigate to login page
-    // useEffect(() => {
-    //     const user = JSON.parse(localStorage.getItem('user'));
-    //     const token = JSON.parse(localStorage.getItem('token'));
-    //     const userId = JSON.parse(localStorage.getItem('userId'));
-    //     const email = JSON.parse(localStorage.getItem('email'));
-
-    //     if (user && token) {
-    //         dispatch(addUser({ userName: user, token: token, userId: userId, userEmail: email }));
-    //     }
-
-    //     if (isObjectEmpty(currentUser)) {
-    //         navigate('/register');
-    //     }
-    // }, []);
 
     const handleChange = (e) => {
         setData({ ...data, [e.target.name]: e.target.value, userId: currentUser.userId, author: currentUser.userName });
@@ -43,7 +23,7 @@ const CreateBlog = () => {
             await axios.post('http://localhost:5000/api/user/create', data, {
                 headers: { authorization: `Bearer ${currentUser.token}` }
             });
-            navigate('/');
+            navigate('/home');
             toast.success("Blog created successfully");
         } catch (err) {
             toast.error(err.response?.data?.message || "An error occurred");
@@ -53,9 +33,9 @@ const CreateBlog = () => {
         }
     };
 
-    return (<div className="bg-gray-100 px-24">
-        <div className="flex justify-start items-center ml-16 pt-8">
-            <Link to={'/'}>
+    return (<div className="bg-gray-100 lg:px-24 px-2">
+        <div className="flex justify-start items-center lg:ml-16 pt-8">
+            <Link to={'/home'}>
                 <ArrowBackIcon className="text-gray-600 mt-4 hover:text-blue-500" style={{ fontSize: '2rem' }} />
             </Link>
         </div>
@@ -101,23 +81,16 @@ const CreateBlog = () => {
 
                     </div>
                     <div className="flex justify-between">
-                        <Button
-                            variant="outlined"
+                        <button
                             type="submit"
-                            sx={{
-                                backgroundColor: 'gray',
-                                color: 'white',
-                                '&:hover': {
-                                    borderColor: 'white',
-                                    backgroundColor: 'black',
-                                },
-                            }}
+                            className="bg-gray-800 text-gray-100 w-36 py-2 rounded-lg font-medium text-lg hover:bg-gray-100 hover:text-gray-950 hover:border hover:border-gray-950 transition-colors"
                         >
                             Submit
-                        </Button>
-                        <Button variant="outlined" onClick={() => navigate('/')}>
+                        </button>
+
+                        <button onClick={() => navigate('/home')} className="border border-gray-900 hover:bg-gray-800 hover:text-gray-100 text-gray-950 w-36 rounded-lg font-medium text-lg transition-colors">
                             Cancel
-                        </Button>
+                        </button>
                     </div>
                 </form>
             </div>

@@ -35,13 +35,6 @@ const ManageUsers = () => {
         setSortedInfo({});
     };
 
-    const setAgeSort = () => {
-        setSortedInfo({
-            order: 'descend',
-            columnKey: 'age',
-        });
-    };
-
     const columns = [
         {
             title: 'Name',
@@ -84,11 +77,11 @@ const ManageUsers = () => {
     return (
         <>
             <Space style={{ marginBottom: 16 }}>
-                <Button className='text-gray-200' onClick={setAgeSort}>Sort age</Button>
                 <Button className='text-gray-200' onClick={clearFilters}>Clear filters</Button>
                 <Button className='text-gray-200' onClick={clearAll}>Clear filters and sorters</Button>
             </Space>
             <Table
+
                 columns={columns}
                 dataSource={users}
                 onChange={handleChange}

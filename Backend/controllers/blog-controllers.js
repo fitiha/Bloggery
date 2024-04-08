@@ -4,7 +4,7 @@ import likeModel from "../models/likeModel.js";
 
 export const getAllBlogs = async (req, res, next) => {
     try {
-        const blogs = await blogModel.find();
+        const blogs = await blogModel.find().populate('userId', 'avatar');
         if (!blogs)
             return res.status(404).json({ message: "No blogs found" });
         else
@@ -119,3 +119,36 @@ export const getAllComments = async (req, res, next) => {
         res.json({ message: err });
     }
 }
+
+
+// export const generatePdf = async (req, res, next) => {
+//     const { pageUrl } = req.query; // Assume the front end sends the page URL as a query parameter
+
+//     if (!pageUrl) {
+//         return res.status(400).send('Page URL is required');
+//     }
+
+//     try {
+//         const browser = await puppeteer.launch();
+//         const page = await browser.newPage();
+//         await page.goto(pageUrl, { waitUntil: 'networkidle0' });
+
+//         // Optionally, remove parts of the page
+//         await page.evaluate(() => {
+//             document.querySelectorAll('.remove-for-pdf').forEach(element => element.remove());
+//             // Add any other transformations here
+//         });
+
+//         const pdfBuffer = await page.pdf({ format: 'A4' });
+
+//         await browser.close();
+
+//         // Send the PDF back to the client
+//         res.setHeader('Content-Type', 'application/pdf');
+//         res.setHeader('Content-Disposition', 'attachment; filename="blog-post.pdf"');
+//         res.send(pdfBuffer);
+//     } catch (error) {
+//         console.error('Error generating PDF:', error);
+//         res.status(500).send('Failed to generate PDF');
+//     }
+// }
