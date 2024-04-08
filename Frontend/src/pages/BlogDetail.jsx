@@ -211,7 +211,7 @@ const BlogDetail = () => {
                 <div className="bg-fixed max-w-4xl w-full h-auto lg:ml-20 bg-gray-700 text-gray-100 rounded-lg shadow-lg flex-shrink flex overflow-y-scroll" style={{ backgroundImage: "url(https://www.shutterstock.com/shutterstock/photos/2253552533/display_1500/stock-vector-various-people-with-a-large-pencil-young-person-holding-pencil-cute-funny-isolated-characters-2253552533.jpg)" }}>
 
                     <article className="font-['Georgia'] max-w-4xl w-full h-full mt-56 p-8 bg-gray-900 text-gray-100 rounded-lg shadow-lg flex-shrink ">
-                        <h1 className="text-6xl font-bold mb-4">{blog.title}</h1>
+                        <h1 className="lg:text-6xl md:text-5xl text-5xl font-bold mb-4">{blog.title}</h1>
                         <span >Written by:</span>
                         <span className="font-bold text-lg mb-2 text-orange-700 capitalize"> {blog.author}</span>
                         <hr />

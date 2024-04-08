@@ -146,7 +146,7 @@ const Home = () => {
         ) : (
             <div className="px-4 lg:px-24 pt-8 min-h-screen bg-gray-100">
                 <Typography variant="h4" gutterBottom className="font-light text-4xl flex items-center justify-between">
-                    <h1 className="font-['Quattrocento'] font-bold text-orange-800 text-4xl">  Latest Blogs</h1>
+                    <h1 className="font-['Quattrocento'] font-bold text-orange-800 lg:text-4xl md:text-3xl text-2xl">  Latest Blogs</h1>
                     <div>
                         {location.pathname == "/home" &&
                             <div>

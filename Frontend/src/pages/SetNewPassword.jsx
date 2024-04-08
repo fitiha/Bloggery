@@ -40,7 +40,7 @@ const SetNewPassword = () => {
             </Link>
         </div>
         <div className="flex justify-center">
-            <div className=" h-96 bg-gray-950 w-6/12 text-gray-100 p-8 rounded-lg flex flex-col gap-3">
+            <div className=" h-96 bg-gray-950 lg:w-6/12 mx-2 text-gray-100 p-8 rounded-lg flex flex-col gap-3">
                 <h1 className="text-4xl">Set New Password</h1>
                 <p>Please enter your new password</p>
                 <TextField

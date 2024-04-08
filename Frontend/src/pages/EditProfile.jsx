@@ -76,7 +76,7 @@ const EditProfile = () => {
                 </Link>
             </div>
             <div className="flex justify-center mt-4">
-                <div className="flex lg:flex-row md:flex-row sm:flex-col lg:mx-8 w-full lg:w-3/5 sm:w-4/5 md:w-3/5 xs:w-4/5 w-2/5 h-auto p-8 rounded-t-3xl bg-gray-950">
+                <div className="flex flex-col lg:flex-row lg:mx-8 w-full lg:w-3/5 sm:w-4/5 md:w-3/5 h-auto p-8 rounded-t-3xl bg-gray-950">
                     <img
                         src={`https://bloggery-a3xc.onrender.com/uploads/${currentUser.avatar}`}
                         alt={currentUser.name}
@@ -100,7 +100,7 @@ const EditProfile = () => {
                 </div>
             </div>
             <div className="flex justify-center mt-0.5 mb-1">
-                <div className="flex-col w-full mx-8 lg:w-3/5 sm:w-4/5 md:w-3/5 xs:w-3/5 text-gray-100 h-auto p-8 rounded-b-3xl bg-gray-950">
+                <div className="flex-col w-full sm:w-4/5 md:w-3/5 xs:w-3/5 text-gray-100 h-auto p-8 rounded-b-3xl bg-gray-950">
                     <h1 className="text-2xl font-bold">Edit Profile</h1>
                     <hr className="border-gray-300 mt-2" />
 

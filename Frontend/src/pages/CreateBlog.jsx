@@ -80,7 +80,7 @@ const CreateBlog = () => {
                         </Select>
 
                     </div>
-                    <div className="flex justify-between">
+                    <div className="flex justify-between gap-2">
                         <button
                             type="submit"
                             className="bg-gray-800 text-gray-100 w-36 py-2 rounded-lg font-medium text-lg hover:bg-gray-100 hover:text-gray-950 hover:border hover:border-gray-950 transition-colors"
