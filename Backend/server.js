@@ -23,10 +23,9 @@ dotenv.config();
 
 
 //routes
+app.get('/', (req, res) => res.send("server is running"))
 app.use('/api/user', userRouter);
 app.use('/api/blog', blogRouter);
-
-
 
 //connections
 mongoose.connect(process.env.MONGO_URI)
