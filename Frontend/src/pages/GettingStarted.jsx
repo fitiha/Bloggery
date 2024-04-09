@@ -1,13 +1,12 @@
 import { Link } from 'react-router-dom';
+import StartNav from '../components/StartNav';
+import AboutUs from '../components/AboutUs';
+import Testimonials from '../components/Testimonials';
+
 
 const GettingStarted = () => {
     return (<>
-        <div className='flex items-center lg:gap-12 gap-4 justify-end bg-gray-900 text-gray-100 lg:text-xl md:text-xl text-sm h-16 px-8 z-100'>
-            <h1 className=''>Home</h1>
-            <h1 className='hover:text-orange-700'>Contact</h1>
-            <h1 className='hover:text-orange-700'>Testimonials</h1>
-            <h1 className='hover:text-orange-700'>Developer</h1>
-        </div>
+        <StartNav />
         <div className="min-h-svh min-h-full text-gray-700 flex justify-center pb-32 items-center">
             <div className="absolute inset-0 w-full h-full">
                 <img src="https://img.freepik.com/free-vector/blogging-concept-illustration_114360-1038.jpg?w=740" alt="Blogging Community" className="w-fit h-fit mt-16 object-cover opacity-50" />
@@ -28,17 +27,20 @@ const GettingStarted = () => {
         </div>
         <hr />
 
-        <div className="flex flex-col items-center my-8">
+        <div id='how-it-works' className="flex flex-col items-center my-8 p-4 bg-gray-100">
             <h1 className="text-5xl lg:text-8xl text-orange-700 font-['Georgia']">How it works</h1><br />
             <iframe
-                className="w-11/12 md:w-3/4 lg:w-1/2 xl:w-1/2 h-64 md:h-96"
+                className="w-11/12 md:w-3/4 lg:w-1/2 xl:w-1/2 h-64 md:h-96 m-8"
                 src="https://www.youtube.com/embed/kyjpj1RrsyI"
                 title="Bloggery guide"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen>
             </iframe>
+            <p ><span className='text-orange-700'>Vid:</span> A YouTube video that shows a demonstration on how to use Bloggery. </p>
         </div>
-
+        <hr />
+        <AboutUs />
+        <Testimonials />
     </>);
 };
 
