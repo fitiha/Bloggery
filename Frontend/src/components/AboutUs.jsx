@@ -26,7 +26,7 @@ const AboutUs = () => {
                     <div className="w-full md:w-1/2 lg:w-1/3 px-4 mb-8">
                         <div className="h-full p-8 bg-white shadow-lg rounded-lg">
                             <h3 className="text-xl font-semibold mb-4">Join Us</h3>
-                            <p>Whether you're a seasoned blogger or just starting, we invite you to join our platform and start making an impact with your writing today.</p>
+                            <p>Whether you are a seasoned blogger or just starting, we invite you to join our platform and start making an impact with your writing today.</p>
                         </div>
                     </div>
                 </div>
