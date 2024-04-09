@@ -51,7 +51,9 @@ export const currentBlogsSlice = createSlice({
             }
         },
         removeFollowing: (state, action) => {
-            state.followings = state.followings.filter(f => { f.followerId == action.payload.followerId && f.followingId == action.payload.followingId })
+            state.followings = state.followings.filter(f =>
+                !(f.followerId == action.payload.followerId && f.followingId == action.payload.followingId)
+            );
         }
     },
 })
