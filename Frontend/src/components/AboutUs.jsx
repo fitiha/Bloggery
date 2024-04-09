@@ -1,10 +1,10 @@
 
 const AboutUs = () => {
     return (
-        <section id="about-us" className="py-12 text-gray-800">
+        <section id="about-us" className="py-12 text-gray-800 font-['Georgia']">
             <div className="container mx-auto px-4">
                 <div className="text-center mb-12">
-                    <h2 className="text-5xl lg:text-8xl font-bold">About Us</h2>
+                    <h2 className="text-5xl lg:text-8xl text-orange-700 font-bold">About Us</h2>
                     <p className="text-xl mt-4">Diving deep into the world of blogging</p>
                 </div>
 
