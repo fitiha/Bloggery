@@ -4,6 +4,7 @@ import helmet from 'helmet';
 import mongoose from 'mongoose';
 import userRouter from './routes/user-routes.js';
 import blogRouter from './routes/blog-routes.js';
+import runChat from './chat/runChat.js';
 import dotenv from 'dotenv';
 // import path from 'path';
 
@@ -24,6 +25,12 @@ dotenv.config();
 
 //routes
 app.get('/', (req, res) => res.send("server is running"))
+app.post("/assistant", async (req, res) => {
+    console.log("prompt ", req.body)
+    const prompt = req.body.prompt;
+    const response = await runChat(prompt);
+    res.status(200).json({ response });
+})
 app.use('/api/user', userRouter);
 app.use('/api/blog', blogRouter);
 
