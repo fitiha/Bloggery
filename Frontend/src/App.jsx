@@ -18,6 +18,7 @@ import GettingStarted from "./pages/GettingStarted"
 import EditProfile from "./pages/EditProfile"
 import ChangePassword from "./pages/ChangePassword"
 import SetNewPassword from "./pages/SetNewPassword"
+import ChatBot from "./pages/ChatBot"
 
 
 const App = () => {
@@ -47,6 +48,7 @@ const App = () => {
         <Route path="blogs" element={<ManageBlogs />} />
       </Route>
     </Routes>
+    <ChatBot />
     <Footer />
   </>
   )

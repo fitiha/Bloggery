@@ -71,4 +71,4 @@ async function runChat(prompt) {
     }
 }
 
-module.exports = runChat;
+export default runChat;
