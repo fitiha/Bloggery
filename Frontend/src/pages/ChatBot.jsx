@@ -16,9 +16,9 @@ const ChatBot = () => {
         try {
             const reply = await axios.post('https://bloggery-a3xc.onrender.com/assistant', { prompt: question });
             console.log("chat bot reply: ", reply);
-            // let answer = reply.data.response;
-            // let cleanAnswer = answer?.split(' ')?.filter(part => !part.includes('*'))?.join(' ');
-            const newEntry = { question: question, answer: reply.data.response };
+            let answer = reply.data.response;
+            let cleanAnswer = answer?.split(' ')?.filter(part => !part.includes('*'))?.join(' ');
+            const newEntry = { question: question, answer: cleanAnswer };
             setConversation([...conversation, newEntry]);
             setPrompt('');
         } catch (error) {
@@ -51,9 +51,9 @@ const ChatBot = () => {
                     <h1 className="text-2xl font-bold mb-4">Bloggery ChatBot</h1>
                     <div>
                         {conversation.map((entry, index) => (
-                            <div key={index} className="mb-4 p-2 border-b flex flex-col gap-4">
-                                <p className="text-lg font-semibold capitalize border-r-8 border-orange-500 shadow-lg">You: {entry.question}</p>
-                                <p className="text-gray-600 text-lg text-right text-justify border-l-8 border-gray-400 shadow-lg">Sam: {entry.answer}</p>
+                            <div key={index} className="mb-4 p-2 border-b flex flex-col gap-4 font-['Quattrocento']">
+                                <p className="text-lg font-light capitalize border-r-4 border-orange-500 shadow-xl bg-gray-950 text-gray-100 rounded-lg p-3"><span className='font-bold'>You:</span> {entry.question}</p>
+                                <p className="font-light text-lg text-right text-justify border-l-4 border-gray-400 shadow-lg p-3 bg-gray-900 text-gray-100 rounded-lg"><span className='font-bold'>Sam:</span> {entry.answer}</p>
                             </div>
                         ))}
                     </div>

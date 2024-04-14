@@ -1,11 +1,12 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import TextField from '@mui/material/TextField';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { InputLabel, MenuItem, Select } from "@mui/material";
+import isObjectEmpty from '../functions/isObjectEmpty.';
 
 const CreateBlog = () => {
     const navigate = useNavigate();
@@ -16,6 +17,14 @@ const CreateBlog = () => {
     const handleChange = (e) => {
         setData({ ...data, [e.target.name]: e.target.value, userId: currentUser.userId, author: currentUser.userName });
     };
+
+    useEffect(() => {
+        if (isObjectEmpty(currentUser)) {
+            console.log("one one")
+            toast.warn('Notice: You need an account to create blogs.')
+            navigate('/register');
+        }
+    }, [])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
