@@ -46,9 +46,9 @@ const GettingStarted = () => {
                 <div className='flex gap-2 items-center'>
                     <img src="https://media.licdn.com/dms/image/D4E03AQEn7XI25b17oA/profile-displayphoto-shrink_800_800/0/1702796714494?e=1718236800&v=beta&t=MOUVFTbbK57bQBuCRpNVSkdjRt2R_fUmsnxn1C9Y75I" alt="" className='h-36 w-36 rounded-full' />
                     <div className="flex flex-col font-['Roboto']">
-                        <p className='float-right text-xl  font-bold'>Natnael Fisseha (Natty🐟)</p>
-                        <p className='float-right text-xl'>fitihanegest1995@gmail.com</p>
-                        <p className='float-right text-xl'>+2519 05 687 433</p>
+                        <p className='float-right lg:text-xl text-md  font-bold'>Natnael Fisseha (Natty🐟)</p>
+                        <p className='float-right lg:text-xl text-md'>fitihanegest1995@gmail.com</p>
+                        <p className='float-right lg:text-xl text-md'>+2519 05 687 433</p>
                     </div>
                 </div>
                 <div className=' text-xl'>
