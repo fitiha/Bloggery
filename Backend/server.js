@@ -22,7 +22,6 @@ app.use('/uploads', express.static('uploads', {
 app.use(helmet());
 dotenv.config();
 
-
 //routes
 app.get('/', (req, res) => res.send("server is running"))
 app.post("/assistant", async (req, res) => {
