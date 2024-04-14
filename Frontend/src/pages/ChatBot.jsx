@@ -15,9 +15,10 @@ const ChatBot = () => {
         const question = prompt;
         try {
             const reply = await axios.post('https://bloggery-a3xc.onrender.com/assistant', { prompt: question });
-            let answer = reply.data.response;
-            let cleanAnswer = answer.split(' ').filter(part => !part.includes('*')).join(' ');
-            const newEntry = { question: question, answer: cleanAnswer };
+            console.log("chat bot reply: ", reply);
+            // let answer = reply.data.response;
+            // let cleanAnswer = answer?.split(' ')?.filter(part => !part.includes('*'))?.join(' ');
+            const newEntry = { question: question, answer: reply.data.response };
             setConversation([...conversation, newEntry]);
             setPrompt('');
         } catch (error) {
@@ -35,9 +36,6 @@ const ChatBot = () => {
 
     return (
         <div className="fixed bottom-4 right-4">
-            {/* <Fab color="primary" onClick={handleOpen} className="text-white">
-        Hey, I'm Sam!
-      </Fab> */}
             <Fab
                 color="primary"
                 className="fixed bottom-4 right-4 z-10"
