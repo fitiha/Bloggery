@@ -1,6 +1,6 @@
 import { TextField } from "@mui/material";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { toast } from "react-toastify";
 import { addUser } from "../redux/slices/currentUserSlice";
@@ -10,15 +10,15 @@ import KeyIcon from '@mui/icons-material/Key';
 import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
 
 const EditProfile = () => {
-    const [profileData, setProfileData] = useState('');
+    // const [profileData, setProfileData] = useState('');
     const [isProfileEditVisible, setIsProfileEditVisible] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const currentUser = useSelector(state => state.currentUser.value);
 
-    useEffect(() => {
-        setProfileData(currentUser);
-    }, [])
+    // useEffect(() => {
+    //     setProfileData(currentUser);
+    // }, [])
 
     const [formData, setFormData] = useState({
         name: currentUser.userName || '',
@@ -114,7 +114,7 @@ const EditProfile = () => {
                             fullWidth
                             name="name"
                             label="Name"
-                            value={profileData.userName}
+                            value={formData.name}
                             onChange={handleChange}
                             InputLabelProps={{
                                 shrink: true,
@@ -137,7 +137,7 @@ const EditProfile = () => {
                             fullWidth
                             variant="outlined"
                             name="email"
-                            value={profileData.userEmail}
+                            value={formData.email}
                             label="Email"
                             onChange={handleChange}
                             InputLabelProps={{

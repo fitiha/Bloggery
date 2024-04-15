@@ -170,43 +170,45 @@ const Profile = (props) => {
                                         (blogs.length == 0 ? <h1 className="font-light text-gray-400">No blogs here yet.</h1> :
                                             blogs.map((blog, index) => {
                                                 return (<>
-                                                    <List key={index} sx={{ width: '100%' }} className="odd:bg-slate-400 even:bg-gray-400 ">
-                                                        <ListItem alignItems="flex-start">
-                                                            <ListItemAvatar>
-                                                                <Avatar alt={blog.title} src="#" />
-                                                            </ListItemAvatar>
-                                                            <ListItemText
-                                                                primary={blog.title}
-                                                                secondary={
-                                                                    <div className="mr-4">
-                                                                        <React.Fragment >
-                                                                            <Typography
-                                                                                sx={{ display: 'inline' }}
-                                                                                component="span"
-                                                                                variant="body2"
-                                                                                color="text.primary"
-                                                                            >
-                                                                                {data.name}
-                                                                            </Typography>
-                                                                            <p className="line-clamp-2">{blog.content}</p>
-                                                                        </React.Fragment>
-                                                                    </div>
-                                                                }
-                                                            />
+                                                    <Link to={`/detail/${blog._id}`}>
+                                                        <List key={index} sx={{ width: '100%' }} className="odd:bg-slate-400 even:bg-gray-400 hover:bg-gray-500">
+                                                            <ListItem alignItems="flex-start">
+                                                                <ListItemAvatar>
+                                                                    <Avatar alt={blog.title} src="#" />
+                                                                </ListItemAvatar>
+                                                                <ListItemText
+                                                                    primary={blog.title}
+                                                                    secondary={
+                                                                        <div className="mr-4">
+                                                                            <React.Fragment >
+                                                                                <Typography
+                                                                                    sx={{ display: 'inline' }}
+                                                                                    component="span"
+                                                                                    variant="body2"
+                                                                                    color="text.primary"
+                                                                                >
+                                                                                    {data.name}
+                                                                                </Typography>
+                                                                                <p className="line-clamp-2">{blog.content}</p>
+                                                                            </React.Fragment>
+                                                                        </div>
+                                                                    }
+                                                                />
 
-                                                            <div className="grid grid-rows-1 gap-5">
-                                                                <Link to={`/edit/${blog._id}`}>
-                                                                    <EditNoteIcon className="hover:text-sky-600" />
-                                                                </Link>
+                                                                <div className="grid grid-rows-1 gap-5">
+                                                                    <Link to={`/edit/${blog._id}`}>
+                                                                        <EditNoteIcon className="hover:text-sky-600" />
+                                                                    </Link>
 
-                                                                <DeleteIcon className="hover:text-red-600" onClick={() => {
-                                                                    setDeleteOpenState(true)
-                                                                    handleDeleteConfirmation(blog._id)
-                                                                }} />
-                                                            </div>
-                                                        </ListItem>
-                                                        <Divider variant="inset" component="li" className="h-0.5 bg-red-800" />
-                                                    </List>
+                                                                    <DeleteIcon className="hover:text-red-600" onClick={() => {
+                                                                        setDeleteOpenState(true)
+                                                                        handleDeleteConfirmation(blog._id)
+                                                                    }} />
+                                                                </div>
+                                                            </ListItem>
+                                                            <Divider variant="inset" component="li" className="h-0.5 bg-red-800" />
+                                                        </List>
+                                                    </Link>
                                                 </>
                                                 )
                                             })

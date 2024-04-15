@@ -211,27 +211,29 @@ const BlogDetail = () => {
                 <div className="bg-fixed max-w-4xl w-full h-auto lg:ml-20 bg-gray-700 text-gray-100 rounded-lg shadow-lg flex-shrink flex overflow-y-scroll" style={{ backgroundImage: "url(https://www.shutterstock.com/shutterstock/photos/2253552533/display_1500/stock-vector-various-people-with-a-large-pencil-young-person-holding-pencil-cute-funny-isolated-characters-2253552533.jpg)" }}>
 
                     <article className="font-['Georgia'] max-w-4xl w-full h-full mt-56 p-8 bg-gray-900 text-gray-100 rounded-lg shadow-lg flex-shrink ">
-                        <h1 className="lg:text-6xl md:text-5xl text-5xl font-bold mb-4">{blog.title}</h1>
+                        <h1 className="lg:text-6xl md:text-5xl text-3xl font-bold mb-4">{blog.title}</h1>
                         <span >Written by:</span>
                         <span className="font-bold text-lg mb-2 text-orange-700 capitalize"> {blog.author}</span>
                         <hr />
-                        <div className=" text-2xl whitespace-pre-line pt-4 font-['Georgia']">
+                        <div className=" text-2xl whitespace-pre-line pt-4 font-['Georgia'] text-justify">
                             {blog.content}
                         </div>
                     </article>
                 </div>
 
                 <div className="p-8 lg:w-1/3 md:w-full sm:w-full max-w-4xl h-full pb-16 bg-gray-950 text-gray-100 rounded-lg shadow-lg">
-                    <div className="pb-4 pt-2">
+
+                    <div className="pb-4 pt-2" >
                         <div className="bg-zinc-900 h-fit rounded-3xl p-4 h-32">
                             <h1 className="text-xl font-light text-orange-500">About the author</h1>
                             <div className="lg:pl-3 flex lg:flex-row flex-col">
-                                {/* <Avatar src={`http://localhost:5000/uploads/${blog.userId.avatar}`} sx={{ width: 80, height: 80 }} className="mt-1.5" /> */}
-                                <Avatar src={`https://bloggery-a3xc.onrender.com/uploads/${blog.userId.avatar}`} sx={{ width: 80, height: 80 }} className="mt-1.5" />
-                                <div className="float-right ml-3 mt-4 text-lg">
-                                    <p className=" font-bold">{blog.author}</p>
-                                    <p className=" font-light">{followers.length} Followers</p>
-                                </div>
+                                <Link to={`/blogger/${blog.userId._id}`} className="flex">
+                                    <Avatar src={`https://bloggery-a3xc.onrender.com/uploads/${blog.userId.avatar}`} sx={{ width: 80, height: 80 }} className="mt-1.5" />
+                                    <div className="float-right ml-3 mt-4 text-lg">
+                                        <p className=" font-bold">{blog.author}</p>
+                                        <p className=" font-light">{followers.length} Followers</p>
+                                    </div>
+                                </Link>
                                 <div className="flex items-center ml-3">
                                     <button
                                         // type="submit"
@@ -240,12 +242,12 @@ const BlogDetail = () => {
                                     >
                                         {buttonLabel}
                                     </button>
-
                                 </div>
                             </div>
-
                         </div>
                     </div>
+
+
                     <div className="mb-4">
                         <h1 className="text-xl font-light">Comments </h1>
                         <hr className="mt-1" />

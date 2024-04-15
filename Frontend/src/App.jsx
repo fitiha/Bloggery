@@ -11,6 +11,7 @@ import EditBlog from "./pages/EditBlog"
 import Admin from './pages/admin/Admin'
 import ManageUsers from "./pages/admin/ManageUsers"
 import ManageBlogs from "./pages/admin/ManageBlogs"
+import VisualBlogs from "./pages/admin/BlogsPie"
 import Footer from "./components/Footer"
 import { ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
@@ -19,6 +20,7 @@ import EditProfile from "./pages/EditProfile"
 import ChangePassword from "./pages/ChangePassword"
 import SetNewPassword from "./pages/SetNewPassword"
 import ChatBot from "./pages/ChatBot"
+import BloggerDetails from "./pages/BloggerDetails"
 
 
 const App = () => {
@@ -37,6 +39,7 @@ const App = () => {
       <Route path='/set-new-password' element={<SetNewPassword />} />
       <Route path="/create" element={<CreateBlog />} />
       <Route path="/profile" element={<Profile userType="user" />} />
+      <Route path="/blogger/:id" element={<BloggerDetails />} />
       <Route path="/detail/:id" element={<BlogDetail />} />
       <Route path="/edit/:id" element={<EditBlog />} />
 
@@ -46,6 +49,7 @@ const App = () => {
         <Route path="profile" element={<Profile userType="admin" />} />
         <Route path='users' element={<ManageUsers />} />
         <Route path="blogs" element={<ManageBlogs />} />
+        <Route path="visual-blogs" element={<VisualBlogs />} />
       </Route>
     </Routes>
     <ChatBot />

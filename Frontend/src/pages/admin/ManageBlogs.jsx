@@ -1,25 +1,17 @@
 import { useState, useEffect } from 'react';
 import { Table, Space, Button } from 'antd';
-import axios from 'axios';
+import { useSelector } from 'react-redux';
 
 const ManageBlogs = () => {
     const [blogs, setBlogs] = useState([]);
     const [filteredInfo, setFilteredInfo] = useState({});
     const [sortedInfo, setSortedInfo] = useState({});
+    const blogsInTheStore = useSelector((state) => state.currentBlogs.value);
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                // const response = await axios.get('http://localhost:5000/api/blog');
-                const response = await axios.get('https://bloggery-a3xc.onrender.com/api/blog');
-                setBlogs(response.data.blogs); // Assuming the response directly contains an array of blogs
-                console.log(response.data.blogs); //)
-            } catch (err) {
-                console.log(err.message);
-            }
-        };
-        fetchData();
-    }, []);
+        setBlogs(blogsInTheStore);
+
+    }, [])
 
     const handleChange = (pagination, filters, sorter) => {
         console.log('Various parameters', pagination, filters, sorter);
