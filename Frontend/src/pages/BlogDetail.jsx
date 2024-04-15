@@ -215,7 +215,7 @@ const BlogDetail = () => {
                         <span >Written by:</span>
                         <span className="font-bold text-lg mb-2 text-orange-700 capitalize"> {blog.author}</span>
                         <hr />
-                        <div className=" text-2xl whitespace-pre-line pt-4 font-['Georgia'] lg:text-left md:text-left text-justify">
+                        <div className="lg:text-2xl md:text-2xl text-xl whitespace-pre-line pt-4 font-['Georgia'] lg:text-left md:text-left text-justify">
                             {blog.content}
                         </div>
                     </article>
