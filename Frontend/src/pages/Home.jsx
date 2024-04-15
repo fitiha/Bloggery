@@ -154,7 +154,7 @@ const Home = () => {
         ) : (
             <div className="px-4 lg:px-24 pt-8 min-h-screen bg-gray-100">
                 <Typography variant="h4" gutterBottom className="font-light text-4xl flex items-center justify-between">
-                    <div className="flex gap-8">
+                    <div className="flex gap-2 lg:gap-8 md:gap-8">
                         <h1 className="font-['Quattrocento'] font-bold text-orange-800 lg:text-4xl md:text-3xl text-2xl mt-4">  Latest Blogs</h1>
                         <div className="flex gap-2">
                             <SearchOutlinedIcon className="mt-6" />
