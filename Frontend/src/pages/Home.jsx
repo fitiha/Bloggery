@@ -15,11 +15,12 @@ import Typography from '@mui/material/Typography';
 import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
 import { formatDistanceToNow } from 'date-fns';
 import isObjectEmpty from '../functions/isObjectEmpty.'
-import { IconButton } from "@mui/material";
+import { IconButton, TextField } from "@mui/material";
 import FavoriteBorderRounded from "@mui/icons-material/FavoriteBorderRounded";
 import Box from '@mui/material/Box';
 import LinearProgress from '@mui/material/LinearProgress';
 import { like, setLikes } from "../redux/slices/currentUserSlice";
+import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 
 const Home = () => {
     const [label, setLabel] = useState("Categories");
@@ -139,6 +140,13 @@ const Home = () => {
         setData(prevBlogs => prevBlogs.filter(blog => blog.category == e.target.innerText));
     };
 
+    const [searchTerm, setSearchTerm] = useState('');
+    const blogNames = blogsInTheStore.map(d => d.title);
+    const filteredData = blogNames.filter(item =>
+        item.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    const filteredBlogs = data.filter(d => filteredData.includes(d.title));
+
     return (<>{
         isLoading ? (<Box sx={{ width: '100%' }}>
             <LinearProgress />
@@ -146,7 +154,19 @@ const Home = () => {
         ) : (
             <div className="px-4 lg:px-24 pt-8 min-h-screen bg-gray-100">
                 <Typography variant="h4" gutterBottom className="font-light text-4xl flex items-center justify-between">
-                    <h1 className="font-['Quattrocento'] font-bold text-orange-800 lg:text-4xl md:text-3xl text-2xl">  Latest Blogs</h1>
+                    <div className="flex gap-8">
+                        <h1 className="font-['Quattrocento'] font-bold text-orange-800 lg:text-4xl md:text-3xl text-2xl mt-4">  Latest Blogs</h1>
+                        <div className="flex gap-2">
+                            <SearchOutlinedIcon className="mt-6" />
+                            <TextField
+                                label="Search field"
+                                type="search"
+                                variant="standard"
+                                fullWidth
+                                onChange={e => setSearchTerm(e.target.value)}
+                            />
+                        </div>
+                    </div>
                     <div>
                         {location.pathname == "/home" &&
                             <div>
@@ -169,7 +189,8 @@ const Home = () => {
                     {
                         data.length < 1 ?
                             <h1>No Blogs in this category</h1> :
-                            (data.slice().reverse().map((blog, index) => (<div key={index}>
+
+                            (filteredBlogs.length > 0 ? filteredBlogs.slice().reverse().map((blog, index) => (<div key={index}>
                                 <Card key={index} className="bg-gray-100 hover:shadow-xl transition-shadow flex flex-col">
                                     <div className="hover:bg-gray-900 bg-gray-950 text-gray-100 flex-grow h-40">
                                         <Link to={`/detail/${blog._id}`}>
@@ -199,7 +220,9 @@ const Home = () => {
                                     </CardActions>
                                 </Card>
                             </div>
-                            )))
+                            )) : <div>
+                                <h1>Oops! No Blogs Found.</h1>
+                            </div>)
                     }
                 </div>
             </div>
