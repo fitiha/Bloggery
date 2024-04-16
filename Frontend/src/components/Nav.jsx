@@ -3,7 +3,9 @@ import { Link, useLocation } from 'react-router-dom';
 import isObjectEmpty from '../functions/isObjectEmpty.';
 import { Avatar } from '@mui/material';
 import LoginRoundedIcon from '@mui/icons-material/LoginRounded';
-import AddRoundedIcon from '@mui/icons-material/AddRounded';
+import BorderColorRoundedIcon from '@mui/icons-material/BorderColorRounded';
+import CircleNotificationsRoundedIcon from '@mui/icons-material/CircleNotificationsRounded';
+import NotificationBell from './NotificationBell';
 
 const NavBar = () => {
     const location = useLocation();
@@ -16,13 +18,17 @@ const NavBar = () => {
                     <img src='https://www.svgrepo.com/show/54787/bebo.svg' alt="logo" className='h-12 w-12 bg-white mt-1 hover:bg-orange-700' />
                     {location.pathname == '/home' ? <h1 className="text-4xl hidden lg:block md:block font-['Cinzel'] font-light mt-3">loggery.</h1> : null}
                 </Link>
+
                 {
                     location.pathname != '/' ?
-                        <div className="flex items-center space-x-4">
+                        <div className="flex items-center space-x-4 gap-4">
                             <Link to='/create' className='hover:text-orange-700'>
-                                <AddRoundedIcon />
-                                <span >Create Blog</span>
+                                <BorderColorRoundedIcon />
+                                {/* <span >Create Blog</span> */}
                             </Link>
+                            {
+                                isObjectEmpty(currentUser) ? null : <NotificationBell />
+                            }
                             <Link to={isObjectEmpty(currentUser) ? '/login' : '/profile'} className='flex items-center hover:text-orange-700'>
                                 {isObjectEmpty(currentUser) ? (
                                     <>
@@ -37,6 +43,7 @@ const NavBar = () => {
                                     </>
                                 )}
                             </Link>
+
 
                         </div>
                         : null

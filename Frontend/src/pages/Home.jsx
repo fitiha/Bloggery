@@ -21,6 +21,7 @@ import Box from '@mui/material/Box';
 import LinearProgress from '@mui/material/LinearProgress';
 import { like, setLikes } from "../redux/slices/currentUserSlice";
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
+import SearchBar from "../components/SearchBar";
 
 const Home = () => {
     const [label, setLabel] = useState("Categories");
@@ -165,6 +166,7 @@ const Home = () => {
                                 fullWidth
                                 onChange={e => setSearchTerm(e.target.value)}
                             />
+                            <SearchBar />
                         </div>
                     </div>
                     <div>

@@ -22,6 +22,9 @@ const userSchema = Schema({
         type: Schema.Types.ObjectId,
         ref: 'Blog',
     }],
+    notification: [{
+        type: String
+    }]
 },
     {
         timestamps: true

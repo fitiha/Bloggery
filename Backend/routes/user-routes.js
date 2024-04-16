@@ -1,5 +1,5 @@
 import express from 'express';
-import { addBlog, adminLogin, changePassword, checkPassword, clearUsers, createUser, deleteUser, followUser, getAllFollowingData, getAllUsers, getUserById, likeBlog, likedBlogs, makeComment, makeReply, signIn, unfollowUser, unlikeBlog, updateUser } from '../controllers/user-controllers.js';
+import { addBlog, addNotification, adminLogin, changePassword, checkPassword, clearUsers, createUser, deleteUser, followUser, getAllFollowingData, getAllUsers, getUserById, likeBlog, likedBlogs, makeComment, makeReply, signIn, unfollowUser, unlikeBlog, updateUser } from '../controllers/user-controllers.js';
 import { auth } from '../middlewares/auth.mjs';
 import multer from 'multer';
 import path from 'path';
@@ -18,6 +18,7 @@ const userRouter = express.Router();
 
 userRouter.get('/', getAllUsers);
 userRouter.post('/reply/:id', makeReply);
+userRouter.post('/notify', addNotification);
 userRouter.post('/signup', createUser);
 userRouter.post('/signIn', signIn);
 userRouter.post('/follow', followUser);

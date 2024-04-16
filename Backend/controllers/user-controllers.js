@@ -68,6 +68,7 @@ export const signIn = (req, res, next) => {
     const { email, password } = req.body;
     userModel.findOne({ email })
         .then((user) => {
+            console.log("user: ", user)
             if (!user) {
                 res.status(404).json({ error: "Can't find a user with this email" });
             } else {
@@ -76,7 +77,7 @@ export const signIn = (req, res, next) => {
                     res.status(422).json({ error: "Passwords do not match" });
                 else {
                     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1hr' }); //the first object can be any thing. token expires in 1hr
-                    res.status(200).json({ token: token, userId: user._id, userName: user.name, userEmail: user.email, avatar: user.avatar });// we then store the token in the frontend state and use it to access the rest of the pages that require auth as a middleware 
+                    res.status(200).json({ token: token, userId: user._id, userName: user.name, userEmail: user.email, avatar: user.avatar, notification: user.notification });// we then store the token in the frontend state and use it to access the rest of the pages that require auth as a middleware 
                 }
             }
         })
@@ -337,5 +338,19 @@ export const changePassword = async (req, res) => {
         res.send(updatedPassword);
     } catch (err) {
         res.send(err)
+    }
+}
+
+export const addNotification = async (req, res) => {
+    try {
+        const { userId, newNotification } = req.body;
+        const user = await userModel.findById(userId);
+        if (!user)
+            res.send("user not found.")
+        user.notification.push(newNotification)
+        await user.save();
+        res.status(200).json({ user });
+    } catch (err) {
+        res.status(500).send(err.message);
     }
 }
