@@ -19,7 +19,7 @@ import { IconButton, TextField } from "@mui/material";
 import FavoriteBorderRounded from "@mui/icons-material/FavoriteBorderRounded";
 import Box from '@mui/material/Box';
 import LinearProgress from '@mui/material/LinearProgress';
-import { like, setLikes } from "../redux/slices/currentUserSlice";
+import { addNotification, like, setLikes } from "../redux/slices/currentUserSlice";
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import SearchBar from "../components/SearchBar";
 
@@ -36,7 +36,7 @@ const Home = () => {
     const userInTheStore = useSelector((state) => state.currentUser.value);
 
 
-    const toggleLike = (bId) => {
+    const toggleLike = (bId, newNotification) => {
         if (isObjectEmpty(userInTheStore)) {
             toast.error("Login or signup to complete this operation.");
             return;
@@ -50,20 +50,34 @@ const Home = () => {
             userId: userInTheStore.userId
         };
 
-        // Use the newly determined state to decide whether to increment or decrement.
+        const notificationContent = {
+            userId: userInTheStore.userId,
+            newNotification: newNotification
+        }
+
         if (isLiked) {
             dispatch(incrementLikes({ id: bId }));
             dispatch(like({ id: bId }))
+            dispatch(addNotification(`${userInTheStore.userName} likes your blog post '${blogsInTheStore.find(b => b._id == bId).title}`))
             setData(blogsInTheStore.map((blog) => blog._id === bId ? { ...blog, likes: blog.likes + 1 } : blog));
             axios.post("https://bloggery-a3xc.onrender.com/api/user/like", likeMessage)
                 .then((response) => {
                     console.log(response.data.message);
+                    // console.log(userInTheStore.userName, "Likes your blog post", blogsInTheStore.find(b => b._id == bId).title)
+
                     // toast.success(response.data.message);
                 })
                 .catch((err) => {
                     console.log(err.response.data.message);
                     // toast.error(err.response.data.message);
                 });
+            axios.post("https://bloggery-a3xc.onrender.com/api/user/notify", notificationContent)
+                .then(response => {
+                    console.log(response)
+                })
+                .catch(err => {
+                    console.log(err)
+                })
         } else {
             dispatch(decrementLikes({ id: bId }));
             setData(blogsInTheStore.map((blog) => blog._id === bId ? { ...blog, likes: blog.likes - 1 } : blog));
@@ -215,7 +229,7 @@ const Home = () => {
 
                                         <div className="flex gap-1 mr-4 text-gray-100">
                                             <span className="pt-2 after:bg-red-300">{blog.likes}</span>
-                                            <IconButton onClickCapture={() => toggleLike(blog._id)} className="p-8">
+                                            <IconButton onClickCapture={() => toggleLike(blog._id, blog.title)} className="p-8">
                                                 {likedBlogs[blog._id] ? <FavoriteOutlinedIcon sx={{ color: 'red' }} /> : <FavoriteBorderRounded sx={{ color: 'white' }} />}
                                             </IconButton>
                                         </div>

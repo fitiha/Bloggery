@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
     value: {},
     likes: {},
+    notification: [],
 }
 
 export const currentUserSlice = createSlice({
@@ -26,11 +27,14 @@ export const currentUserSlice = createSlice({
         },
         unlike: (state, action) => {
             state.likes[action.payload] = false;
+        },
+        addNotification: (state, action) => {
+            state.notification.push(action.payload);
         }
     },
 })
 
 // Action creators are generated for each case reducer function
-export const { addUser, clearState, setLikes, like, unlike } = currentUserSlice.actions
+export const { addUser, clearState, setLikes, like, unlike, addNotification } = currentUserSlice.actions
 
 export default currentUserSlice.reducer
