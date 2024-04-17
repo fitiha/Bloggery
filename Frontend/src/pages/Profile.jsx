@@ -170,7 +170,6 @@ const Profile = (props) => {
                                         (blogs.length == 0 ? <h1 className="font-light text-gray-400">No blogs here yet.</h1> :
                                             blogs.map((blog, index) => {
                                                 return (<>
-                                                    <Link to={`/detail/${blog._id}`}>
                                                         <List key={index} sx={{ width: '100%' }} className="odd:bg-slate-400 even:bg-gray-400 hover:bg-gray-500">
                                                             <ListItem alignItems="flex-start">
                                                                 <ListItemAvatar>
@@ -208,7 +207,6 @@ const Profile = (props) => {
                                                             </ListItem>
                                                             <Divider variant="inset" component="li" className="h-0.5 bg-red-800" />
                                                         </List>
-                                                    </Link>
                                                 </>
                                                 )
                                             })
