@@ -40,7 +40,7 @@ const GettingStarted = () => {
         <hr />
         <AboutUs />
         <Testimonials />
-        <div className='flex flex-col items-center justify-center m-4 p-8' id='developer'>
+        {/* <div className='flex flex-col items-center justify-center m-4 p-8' id='developer'>
             <h1 className="text-5xl lg:text-8xl font-bold text-orange-700 font-['Georgia']">Meet the developer</h1><br />
             <div className='flex justify-center items-center gap-3 flex-wrap'>
                 <div className='flex gap-2 items-center'>
@@ -53,7 +53,7 @@ const GettingStarted = () => {
                 </div>
                 <div className=' text-xl'>
                     <div className='flex flex-wrap gap-3'>
-                        {/* <LinkedInIcon /> */}
+                        
                         <Link to={"https://www.linkedin.com/in/natnael-fisseha/"}>
                             <img src="https://img.freepik.com/free-psd/social-media-logo-design_23-2151299455.jpg?t=st=1712669377~exp=1712672977~hmac=7e6bef564eb245e18b9e5fe5b3d7d7c7ba87aa0f15d2dbe5bab92fafb19c8698&w=740" alt="Linkedin" className='h-16 w-16 hover:text-orange-800' />
                         </Link>
@@ -72,7 +72,7 @@ const GettingStarted = () => {
                     </div>
                 </div>
             </div>
-        </div>
+        </div> */}
 
     </>);
 };
