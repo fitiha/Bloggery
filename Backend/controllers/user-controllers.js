@@ -341,16 +341,16 @@ export const changePassword = async (req, res) => {
     }
 }
 
-export const addNotification = async (req, res) => {
-    try {
-        const { userId, newNotification } = req.body;
-        const user = await userModel.findById(userId);
-        if (!user)
-            res.send("user not found.")
-        user.notification.push(newNotification)
-        await user.save();
-        res.status(200).json({ user });
-    } catch (err) {
-        res.status(500).send(err.message);
-    }
-}
+// export const addNotification = async (req, res) => {
+//     try {
+//         const { userId, newNotification } = req.body;
+//         const user = await userModel.findById(userId);
+//         if (!user)
+//             res.send("user not found.")
+//         user.notification.push(newNotification)
+//         await user.save();
+//         res.status(200).json({ user });
+//     } catch (err) {
+//         res.status(500).send(err.message);
+//     }
+// }

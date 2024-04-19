@@ -14,8 +14,6 @@ export const currentUserSlice = createSlice({
         },
         clearState: (state) => { //reducer function 2 - logging out
             state.value = {};
-            //localStorage.clear();
-            // window.location.reload();
         },
         setLikes: (state, action) => {
             state.likes = action.payload;

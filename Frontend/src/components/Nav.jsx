@@ -4,8 +4,8 @@ import isObjectEmpty from '../functions/isObjectEmpty.';
 import { Avatar } from '@mui/material';
 import LoginRoundedIcon from '@mui/icons-material/LoginRounded';
 import BorderColorRoundedIcon from '@mui/icons-material/BorderColorRounded';
-import CircleNotificationsRoundedIcon from '@mui/icons-material/CircleNotificationsRounded';
-import NotificationBell from './NotificationBell';
+// import CircleNotificationsRoundedIcon from '@mui/icons-material/CircleNotificationsRounded';
+// import NotificationBell from './NotificationBell';
 
 const NavBar = () => {
     const location = useLocation();
@@ -26,9 +26,9 @@ const NavBar = () => {
                                 <BorderColorRoundedIcon />
                                 {/* <span >Create Blog</span> */}
                             </Link>
-                            {
+                            {/* {
                                 isObjectEmpty(currentUser) ? null : <NotificationBell />
-                            }
+                            } */}
                             <Link to={isObjectEmpty(currentUser) ? '/login' : '/profile'} className='flex items-center hover:text-orange-700'>
                                 {isObjectEmpty(currentUser) ? (
                                     <>
