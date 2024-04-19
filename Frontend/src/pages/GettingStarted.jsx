@@ -70,8 +70,8 @@ const GettingStarted = () => {
                         </Link>
                     </div>
                 </div>
-            </div> */}
-    </div >
+            </div> 
+        </div> */}
 
     </>);
 };
